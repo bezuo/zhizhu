@@ -45,7 +45,7 @@ export default new Router({
       children: [
 				{ path: '/goodsList', component: goodsList, name: '商品列表' },
 				{ path: '/addGoods', component: addGoods, name: '添加商品' },
-				{ path: '/modifyGoods', component: modifyGoods, name: '修改商品' }
+				{ path: '/modifyGoods/:goodsId', component: modifyGoods, name: '修改商品', hidden: true }
 			]
     },
     {

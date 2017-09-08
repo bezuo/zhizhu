@@ -21,6 +21,10 @@ html { font-size: 62.5%; }
 
 body { font-size: 1rem; font-family: Arial,Helvetica,sans-serif; }
 
+table,tr,th,td {
+	border: 0 none;
+}
+
 /* 要注意表单元素并不继承父级 font 的问题 */
 button, input, select, textarea { font: 12px/1.5 sans-serif; border: 0 none; background-color: transparent; }
 

@@ -5,7 +5,7 @@ import App from './App';
 import router from './router';
 
 import VueRouter from 'vue-router';
-import VueLazyload from 'vue-lazyload';
+import VueLazyload from 'vue-lazyload'
 import ElementUI from 'element-ui';
 import '@/element-ui/lib/theme-blue/index.css';
  
