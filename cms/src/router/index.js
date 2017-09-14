@@ -8,8 +8,9 @@ import addGoods from '@/pages/goods/addGoods'
 import modifyGoods from '@/pages/Goods/modifyGoods'
 import log from '@/pages/log/log'
 import statistics from '@/pages/statistics/statistics'
-import Bill from '@/pages/Bill/Bill'
-import site from '@/pages/site/site'
+import bill from '@/pages/bill/bill'
+import merchant from '@/pages/setUp/merchant'
+import account from '@/pages/setUp/account'
 
 Vue.use(Router)
 
@@ -75,17 +76,17 @@ export default new Router({
       iconCls: 'iconfont icon-fa-bill',
       leaf: true,
       children: [
-				{ path: '/Bill', component: Bill, name: '财务对账' }
+				{ path: '/bill', component: bill, name: '财务对账' }
 			]
     },
     {
       path: '/',
-      name: '商户资料设置',
+      name: '设置',
       component: index,
       iconCls: 'el-icon-setting',
       children: [
-				{ path: '/site', component: site, name: '商户资料修改'},
-				{ path: '/site', component: site, name: '子账号管理' }
+				{ path: '/merchant', component: merchant, name: '资料修改'},
+				{ path: '/account', component: account, name: '账号管理' }
 			]
     },
   ]

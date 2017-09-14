@@ -108,7 +108,7 @@
 					</el-col>
 					<el-col :span="24" class="content-wrapper">
 						<transition name="fade" mode="out-in">
-							<router-view></router-view>
+							<router-view class="container-box"></router-view>
 						</transition>
 					</el-col>
 				</div>
@@ -246,6 +246,7 @@ export default {
 			top: 60px;
 			bottom: 0px;
 			overflow: hidden;
+			background-color: #fafafa;
 			aside {
 				flex:0 0 230px;
 				width: 230px;
@@ -291,7 +292,7 @@ export default {
 					}
 				}
 				.content-wrapper {
-					background-color: #fff;
+					background-color: #fafafa;
 					box-sizing: border-box;
 				}
 			}

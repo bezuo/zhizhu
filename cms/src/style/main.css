@@ -19,7 +19,7 @@ audio, canvas, video { display: inline-block; *display: inline; *zoom: 1; }
 /* 设置页面字体大小 */
 html { font-size: 62.5%; }
 
-body { font-size: 1rem; font-family: Arial,Helvetica,sans-serif; }
+body { font-size: 12px; font-family: Arial,Helvetica,sans-serif; }
 
 table,tr,th,td {
 	border: 0 none;
