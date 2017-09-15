@@ -46,37 +46,59 @@
 						<el-checkbox v-for="(arr, i) in item.values"
 							:label="arr">
 							{{ arr.valueName }}
+							<!--<el-input size="small" resize="horizontal" v-model="arr.valueName"></el-input>-->
 						</el-checkbox>
 					</el-checkbox-group>
+				</el-form-item>
+				
+				<el-form-item label="特价时间：">
+					<el-date-picker
+				      	v-model="ruleForm.specialTime"
+				      	type="datetimerange"
+				      	placeholder="选择时间范围">
+				    </el-date-picker>
+			    	<span v-if="!!ruleForm.specialTime" style="color: #ff4949;">注：如果选择特价时间，则下方表格中的活动价格必填</span>
 				</el-form-item>
 				
 				<!-- 编辑商品sku信息 start -->
 				<el-form-item>
 					<table class="sku-table">
 						<tr>
-							<th v-for="(item, index) in skus">
+							<th v-for="(item, index) in selectedValues" v-if="item.values.length > 0">
 								{{ item.propName }}
 							</th>
 							<th class="label-title">零售价</th>
 							<th class="label-title">经销价</th>
-							<th class="label-title">活动价（特价）</th>
+							<th class="label-title" v-if="!!ruleForm.specialTime">活动价（特价）</th>
 							<th class="label-title">库存数</th>
 						</tr>
 						<tr v-for="(item, index) in createdSkuItems">
-							<td v-for="arr in item">
-								<el-input size="small" v-model="arr.valueName"></el-input>
+							<td v-for="arr in item.values">
+								{{ arr.valueName }}
 							</td>
 							<td>
-								<el-input size="small" v-model="item.retailPrice"></el-input>
-							</td>
-							<td>								
-								<el-input size="small" v-model="item.disPrice"></el-input>
-							</td>
-							<td>								
-								<el-input size="small" v-model="item.activityPrice"></el-input>
+								<el-col :span="21">
+									<el-input size="small" v-model="item.retailPrice" class="ipt-text"></el-input>
+								</el-col>
+								<el-col :span="3">元</el-col>
 							</td>
 							<td>
-								<el-input size="small" v-model="item.stock"></el-input>
+								<el-col :span="21">
+									<el-input size="small" v-model="item.disPrice" class="ipt-text"></el-input>
+								</el-col>
+								<el-col :span="3">元</el-col>
+							</td>
+							<td v-if="!!ruleForm.specialTime">								
+								<el-col :span="21">									
+									<el-input size="small" v-model="item.activityPrice" class="ipt-text"></el-input>
+								</el-col>
+								<el-col :span="3">元</el-col>
+							</td>
+							<td>
+								<el-col :span="21">
+									<el-input size="small" v-model="item.stock" class="ipt-text"></el-input>
+								</el-col>
+								<el-col :span="3">个</el-col>
 							</td>
 						</tr>
 					</table>
@@ -125,6 +147,7 @@ export default {
 				checkList: [],						// 所选商品标签
 				goodsName: '',						// 商品名称
 				introduction: '',					// 商品简介
+				specialTime: '',					// 特价时间
 			},
 			selectedValues: [],
 			rules: {								// 表单验证（这里使用的是element-ui自带的表单验证）
@@ -231,6 +254,7 @@ export default {
 		
 		// 根据选择的多选框生成一个sku项
 		createdSkuItems: function(){
+			
 			return createSku.init(this.selectedValues, this.skus);
 		}
 	},	
@@ -267,6 +291,7 @@ export default {
 		},
 		
 		submitForm(formName) {						// 表单提交
+			console.log(this.createdSkuItems);
         	this.$refs[formName].validate((valid) => {
 	          	if (valid) {
 	            	alert('submit!');
@@ -313,6 +338,9 @@ export default {
     		padding: 3px 10px;
     		border: 1px solid #bfc3d9;
     	}    	
+    }
+    .ipt-text {
+    	max-width: 80px;
     }
 }
 </style>

@@ -1,20 +1,41 @@
 export default {
 	init(selectedValues, skus) {
 		
+		let arr = [];
 		let skuItems = [];
 		
-//		console.log(JSON.stringify(selectedValues));
-		for(var i=0; i<selectedValues.length; i++) {
-			if(selectedValues[i].values.length > 0) {
+		selectedValues.forEach((item, index) => {
+			
+			let itemValues = item.values;
+			
+			if(itemValues.length != 0) {
 				
-				skuItems.push(selectedValues[i].values);
+				itemValues.forEach((value, Number) => {
+				
+					value.propId = item.propId
+					value.propName = item.propName;
+				});
+				
+				skuItems.push(itemValues);
 			}
-		}
-		
-		let ret = this.descartes(skuItems);
-		
-		console.log(JSON.stringify(ret));
-		return ret;
+		})
+//		console.log(skuItems);
+			
+		let ret = this.descartes(skuItems);		
+		// 生成的sku表格数据
+		ret.forEach((item, index) => {
+			let sku = { 
+					retailPrice:'',
+					disPrice: '',
+					activityPrice: '',
+					stock: ''
+				};
+			sku.values = item;
+			arr.push(sku);
+		});
+		console.log(arr);
+//		console.log(JSON.stringify(arr));
+		return arr;
 	},
 	
 	descartes(list){
