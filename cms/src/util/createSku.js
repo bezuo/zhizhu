@@ -1,5 +1,5 @@
 export default {
-	init(selectedValues, skus) {
+	init(selectedValues) {
 		
 		let arr = [];
 		let skuItems = [];
@@ -33,7 +33,7 @@ export default {
 			sku.values = item;
 			arr.push(sku);
 		});
-		console.log(arr);
+//		console.log(arr);
 //		console.log(JSON.stringify(arr));
 		return arr;
 	},
@@ -91,5 +91,56 @@ export default {
                 }
             }
         }
-    }
+	},
+	
+	// 格式化sku信息
+	submitSku(arr, selectedSku) {
+		
+		let skuModel = {};
+		let skuProps = [];
+		let ppathIdmap = {};
+		
+		arr.forEach((item, index) => {
+			
+			let attrName = '', attrValue = {};
+			
+			attrValue.activityPrice = item.activityPrice;		// 活动价
+			attrValue.disPrice = item.disPrice;					// 零售价
+			attrValue.retailPrice = item.retailPrice;			// 经销价
+			attrValue.quantity = item.stock;					// 库存数
+			
+			// 循环每一项sku的values值，将propId与valueId拼接
+			item.values.forEach((values, _number) => {
+				
+				// 最后一个不需要加";"
+				item.values.length-1 > _number ?					
+					attrName += values.propId + ":" + values.valueId + ";" :
+					attrName += values.propId + ":" + values.valueId;
+			})
+			
+			ppathIdmap[attrName] = attrValue;		
+		});
+		
+		selectedSku.forEach((item, index) => {
+			
+			let obj = {}, arr = [];
+			obj.propId = item.propId;							// 属性id
+			obj.propName = item.propName;						// 属性名称
+			
+			item.values.forEach((value, _number) => {
+				
+				let valueObj = {};
+				valueObj.valueId = value.valueId;				// 值ID
+				valueObj.valueName = value.valueName;			// 值名称
+				arr.push(valueObj);
+			});
+			
+			obj.values = arr;
+			skuProps.push(obj);
+		});
+		
+		skuModel.skuProps = skuProps;
+		skuModel.ppathIdmap = ppathIdmap;		
+		console.log(skuModel);
+	}
 }

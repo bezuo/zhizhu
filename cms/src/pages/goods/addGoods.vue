@@ -46,18 +46,28 @@
 						<el-checkbox v-for="(arr, i) in item.values"
 							:label="arr">
 							{{ arr.valueName }}
-							<!--<el-input size="small" resize="horizontal" v-model="arr.valueName"></el-input>-->
 						</el-checkbox>
 					</el-checkbox-group>
+					<!--<table class="sku-selected-table" v-if="selectedValues[index].values.length">
+						<tr>
+							<th>编辑名称</th>
+						</tr>
+						<tr v-for="arr in selectedValues[index].values">
+							<td>
+								<el-input size="small" resize="horizontal" v-model="arr.valueName"></el-input>
+							</td>
+						</tr>
+					</table>-->
 				</el-form-item>
 				
 				<el-form-item label="特价时间：">
 					<el-date-picker
+						@change="showSpecialsFun"
 				      	v-model="ruleForm.specialTime"
 				      	type="datetimerange"
 				      	placeholder="选择时间范围">
 				    </el-date-picker>
-			    	<span v-if="!!ruleForm.specialTime" style="color: #ff4949;">注：如果选择特价时间，则下方表格中的活动价格必填</span>
+			    	<span v-if="showSpecials" style="color: #ff4949;">注：如果选择特价时间，则下方表格中的活动价格必填</span>
 				</el-form-item>
 				
 				<!-- 编辑商品sku信息 start -->
@@ -69,7 +79,7 @@
 							</th>
 							<th class="label-title">零售价</th>
 							<th class="label-title">经销价</th>
-							<th class="label-title" v-if="!!ruleForm.specialTime">活动价（特价）</th>
+							<th class="label-title" v-if="showSpecials">活动价（特价）</th>
 							<th class="label-title">库存数</th>
 						</tr>
 						<tr v-for="(item, index) in createdSkuItems">
@@ -88,7 +98,7 @@
 								</el-col>
 								<el-col :span="3">元</el-col>
 							</td>
-							<td v-if="!!ruleForm.specialTime">								
+							<td v-if="showSpecials">								
 								<el-col :span="21">									
 									<el-input size="small" v-model="item.activityPrice" class="ipt-text"></el-input>
 								</el-col>
@@ -149,7 +159,8 @@ export default {
 				introduction: '',					// 商品简介
 				specialTime: '',					// 特价时间
 			},
-			selectedValues: [],
+			showSpecials: false,
+			selectedValues: [],						// 多选框选择的sku信息
 			rules: {								// 表单验证（这里使用的是element-ui自带的表单验证）
 			  	categoryValue: [					// 商品分组验证
 			    	{ required: true, message: '请选择一个商品分组', trigger: 'change' }
@@ -255,8 +266,8 @@ export default {
 		// 根据选择的多选框生成一个sku项
 		createdSkuItems: function(){
 			
-			return createSku.init(this.selectedValues, this.skus);
-		}
+			return createSku.init(this.selectedValues);
+		},
 	},	
 	
 	created() {
@@ -290,10 +301,21 @@ export default {
 //			console.log(JSON.stringify(this.selectedValues));
 		},
 		
+		showSpecialsFun() {
+			
+			let strDate = this.ruleForm.specialTime[0];			
+			return this.showSpecials = strDate ? true : false;
+		},
+		
 		submitForm(formName) {						// 表单提交
-			console.log(this.createdSkuItems);
+//			console.log(this.createdSkuItems);
+        	
+        	// 生成需要提交的sku数据
+        	createSku.submitSku(this.createdSkuItems, this.selectedValues);
+        	
         	this.$refs[formName].validate((valid) => {
 	          	if (valid) {
+	          		
 	            	alert('submit!');
 	          	} else {
 	            	console.log('error submit!!');
@@ -320,6 +342,19 @@ export default {
     &:hover {
     	box-shadow: 0 0 8px 0 rgba(232,237,250,.6),0 2px 4px 0 rgba(232,237,250,.5)
     }
+    .sku-selected-table {
+    	width: 400px;
+    	border-collapse: collapse;
+    	th {
+    		text-align: center;
+    		background-color: #f2f2f2;
+    		border: 1px solid #ddd;
+    	}
+    	td {
+    		padding: 10px;
+    		border: 1px solid #ddd;
+    	}
+    }
     .sku-table {
     	width: 800px;
     	margin-bottom: 10px;
@@ -337,7 +372,10 @@ export default {
     	td {
     		padding: 3px 10px;
     		border: 1px solid #bfc3d9;
-    	}    	
+    	}
+    	tr:hover td{
+    		background-color: #fafafa;
+    	}
     }
     .ipt-text {
     	max-width: 80px;

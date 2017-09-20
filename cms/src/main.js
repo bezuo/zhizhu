@@ -2,19 +2,16 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import App from './App';
-import router from './router';
-
-import VueRouter from 'vue-router';
 import VueLazyload from 'vue-lazyload'
+import VueRouter from 'vue-router';
 import ElementUI from 'element-ui';
+import routes from '@/router/index';
 import '@/element-ui/lib/theme-blue/index.css';
- 
-//import store from './store/store'
-//import router from './router/router'
 
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
+Vue.use(VueRouter);
 Vue.use(VueLazyload);
 
 Vue.use(VueLazyload, {
@@ -24,10 +21,26 @@ Vue.use(VueLazyload, {
   attempt: 3
 });
 
+const router = new VueRouter({
+  routes
+})
+
+router.beforeEach((to, from, next) => {
+  //NProgress.start();
+  if (to.path == '/login') {
+    sessionStorage.removeItem('user');
+  }
+  let user = JSON.parse(sessionStorage.getItem('user'));
+  if (!user && to.path != '/login') {
+    next({ path: '/login' })
+  } else {
+    next()
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-//store,
   ...App
 })
