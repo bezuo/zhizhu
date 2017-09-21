@@ -45,7 +45,20 @@
 							<p v-show="item.completeTime">完成：{{ item.completeTime }}</p>
 							<p v-show="item.cancelTime">取消：{{ item.cancelTime }}</p>
 						</td>
-						<td class="el-col-5 padding10">&nbsp;&nbsp;</td>
+						<td class="el-col-5 padding10" style="text-align: center;">
+							<el-button type="primary" size="small" icon="check" 
+								v-show="tabIndex == 0"
+								@click="acceptFun(item.orderId)">接单
+							</el-button>
+							<el-button type="success" size="small" icon="check" 
+								v-show="tabIndex == 1 || tabIndex == 2"
+								@click="completeFun(item.orderId)">完餐
+							</el-button>
+							<el-button type="danger" size="small" icon="close"
+								v-show="tabIndex == 0 || tabIndex == 1"
+								@click="cancelFun(item.orderId)">取消
+							</el-button>
+						</td>
 					</tr>
 				</table>
 				<table class="table" v-else>
@@ -68,7 +81,20 @@
 							<p v-show="item.completeTime">完成：{{ item.completeTime }}</p>
 							<p v-show="item.cancelTime">取消：{{ item.cancelTime }}</p>
 						</td>
-						<td class="el-col-5 padding10"></td>
+						<td class="el-col-5 padding10" style="text-align: center;">
+							<el-button type="primary" size="small" icon="check" 
+								v-show="tabIndex == 0"
+								@click="acceptFun(item.orderId)">接单
+							</el-button>	
+							<el-button type="success" size="small" icon="check" 
+								v-show="tabIndex == 1 || tabIndex == 2"
+								@click="completeFun(item.orderId)">完餐
+							</el-button>
+							<el-button type="danger" size="small" icon="close"
+								v-show="tabIndex == 0 || tabIndex == 1"
+								@click="cancelFun(item.orderId)">取消
+							</el-button>
+						</td>
 					</tr>
 				</table>
 				<el-col :span="24" class="item-btm" v-show="item.message">
@@ -90,6 +116,30 @@
 			</el-pagination>
   		</el-row>
 		<!-- / paging end -->
+		
+		<el-dialog title="退款信息" :visible.sync="dialogTableVisible">
+			<el-col :span="24">
+				<table class="dialog-table">
+					<tr>
+						<th class="el-col-8">商品名称</th>
+						<th class="el-col-4">购买数量</th>
+						<th class="el-col-8">sku选择</th>
+						<th class="el-col-4">商品单价</th>						
+					</tr>
+					<tr v-for="(item, index) in dialogData">
+						<td>{{ item.goodsTitle }}</td>
+						<td style="text-align: center;">{{ item.quantity }}份</td>
+						<td>{{ item.goodsSku }}</td>
+						<td style="text-align: center;">¥{{ item.price }}元</td>
+					</tr>
+				</table>
+				<el-col :span="24">退款金额：¥{{ totalPrice }}元</el-col>
+			</el-col>
+			<div slot="footer" class="dialog-footer" style="text-align: right;">
+		    		<el-button size="small" icon="circle-close" @click="dialogTableVisible = false">取 消</el-button>
+		    		<el-button size="small" icon="circle-check" type="primary" @click="dialogTableVisible = false">确 定</el-button>
+		  	</div>
+		</el-dialog>
 	</section>
 </template>
 
@@ -97,14 +147,74 @@
 export default {
 	data() {
 		return {
-			
+			dialogTableVisible: false,			//  取消退款弹窗
+			dialogData: '',						//  退款弹窗数据
 		}
 	},
 	props: [
 		'orderList',
 		'currentPage',
+		'tabIndex',
 	],
+	computed: {
+		totalPrice: function() {
+			let x = 0;
+			if(this.dialogData) {
+				this.dialogData.forEach((item, index) => {
+					x += item.quantity * item.price;
+				});
+			}
+			return x.toFixed(2)
+		},
+	},
 	methods: {
+		cancelFun(id) {						// 取消订单————显示弹窗
+			
+			this.dialogTableVisible = true;
+			this.orderList.forEach((item, index) => {
+				if(item.orderId == id) {
+					this.dialogData = item.orderGoods
+					return false;
+				}
+			})
+		},
+		
+		acceptFun(id) {						// 接受订单
+			this.$confirm('您确定接受该笔订单?', '提示', {
+	          	confirmButtonText: '确定',
+	          	cancelButtonText: '取消',
+	          	type: 'warning'
+	        }).then(() => {
+	          	this.$message({
+	            		type: 'success',
+	            		message: '接单成功!'
+	          	});
+	        }).catch(() => {
+	          	this.$message({
+	            		type: 'info',
+	            		message: '取消该操作！'
+	          	});          
+	        });
+		},
+		
+		completeFun(id) {					// 完成订单————完餐
+			this.$confirm('此操作将改变订单状态为已完成, 是否继续?', '提示', {
+	          	confirmButtonText: '确定',
+	          	cancelButtonText: '取消',
+	          	type: 'warning'
+	        }).then(() => {
+	          	this.$message({
+	            		type: 'success',
+	            		message: '操作成功!'
+	          	});
+	        }).catch(() => {
+	          	this.$message({
+	            		type: 'info',
+	            		message: '取消该操作！'
+	          	});          
+	        });
+		},
+		
 		handleSizeChange(val) {
         		console.log("每页 "+ val +"条数据");
       	},
@@ -186,6 +296,22 @@ export default {
 		border: solid #ddd;
 		border-width: 0 1px 1px;
 		background-color: #eeeff6;
+	}
+}
+.dialog-table {
+	width: 100%;
+	margin-bottom: 20px;
+	border-collapse: collapse;
+	th {
+		float: none;
+		padding: 6px 0;
+		text-align: center;
+		border: 1px solid #ddd;
+		background-color: #faf1df;
+	}
+	td {
+		padding: 10px;
+		border: 1px solid #ddd;
 	}
 }
 .paging-box {

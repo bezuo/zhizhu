@@ -8,7 +8,7 @@
 				    :key="item.name"
 				    :name="item.id"
 					:label="item.name">
-					<order-table v-if="tabIndex == item.id" :orderList="orderList" :currentPage="currentPage"></order-table>
+					<order-table v-if="tabIndex == item.id" :tabIndex="tabIndex" :orderList="orderList" :currentPage="currentPage"></order-table>
 				</el-tab-pane>
 			</el-tabs>
 		</el-col>
@@ -45,14 +45,14 @@ export default {
 					ImgSrc: 'http://img.alicdn.com/imgextra/i3/1639620692/TB2HULfX0qgF1JjSsppXXaBNXXa_!!1639620692.jpg',						// 商品图片
 					goodsTitle: "煲汤料广东冰姨参鸡汤老火煲汤料包炖汤煲汤材料药膳滋补养生汤料",					// 商品名称
 					goodsSku: '尺码L大；红色',		// 商品sku
-					price: "10.5",					// 商品价格
+					price: "14.5",					// 商品价格
 					quantity: "1"					// 商品数量
 				},{
 					ImgSrc: 'http://img.alicdn.com/imgextra/i3/1639620692/TB2HULfX0qgF1JjSsppXXaBNXXa_!!1639620692.jpg',						// 商品图片
 					goodsTitle: "煲汤料广东冰姨参鸡汤老火煲汤料包炖汤煲汤材料药膳滋补养生汤料",					// 商品名称
-					goodsSku: '尺码L大；红色',		// 商品sku
+					goodsSku: '尺码L小；红色',		// 商品sku
 					price: "10.5",					// 商品价格
-					quantity: "1"					// 商品数量
+					quantity: "2"					// 商品数量
 				}],
 				diningTable: "5",					// 餐桌号码
 				people: "2",							// 用餐人数
@@ -62,7 +62,7 @@ export default {
 				completeTime: "2017-09-17 13:03:30",	// 完成时间
 				cancelTime: "2017-09-17 12:32:22",	// 取消时间
 			},{								// 订单数据
-				orderId: "20170910182533001",		// 订单ID
+				orderId: "20170910182533003",		// 订单ID
 				orderGoods: [{
 					ImgSrc: 'http://img.alicdn.com/imgextra/i3/1639620692/TB2HULfX0qgF1JjSsppXXaBNXXa_!!1639620692.jpg',						// 商品图片
 					goodsTitle: "煲汤料广东冰姨参鸡汤老火煲汤料包炖汤煲汤材料药膳滋补养生汤料",					// 商品名称
