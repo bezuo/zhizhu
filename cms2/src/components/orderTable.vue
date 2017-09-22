@@ -23,10 +23,12 @@
 							<table class="goods-table">
 								<tr v-for="(goodsItem, _number) in item.orderGoods">
 									<td width="43%" class="no-border1 padding10" :class="{'no-border4': item.orderGoods.length-1 == _number}">
-										<el-col :span="8" class="img-box">
-											<img :src="goodsItem.ImgSrc" alt="goodsItem.goodsTitle" />
-										</el-col>
-										<el-col :span="16">{{ goodsItem.goodsTitle }}</el-col>	
+										<el-row :gutter="10">											
+											<el-col :span="8" class="img-box">
+												<img :src="goodsItem.ImgSrc" alt="goodsItem.goodsTitle" />
+											</el-col>
+											<el-col :span="16">{{ goodsItem.goodsTitle }}</el-col>	
+										</el-row>
 									</td>
 									<td width="28.5%" class="no-border2 padding10" :class="{'no-border4': item.orderGoods.length-1 == _number}">
 										{{ goodsItem.goodsSku }}
@@ -266,7 +268,6 @@ export default {
 			.img-box {
 				max-width: 60px;
 				max-height: 60px;
-				margin-right: 10px;
 				overflow: hidden;
 				img {
 					display: block;
