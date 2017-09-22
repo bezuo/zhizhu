@@ -102,7 +102,7 @@ export default {
 	          	confirmButtonText: '确定',
 	          	cancelButtonText: '取消',
 	          	type: 'warning'
-        	}).then(() => {
+        		}).then(() => {
 	          	this.$message({
 	            	type: 'success',
 	            	message: '第'+(id+1)+'条数据下架成功!'

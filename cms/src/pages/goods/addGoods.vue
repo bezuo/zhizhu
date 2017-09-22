@@ -87,28 +87,27 @@
 								{{ arr.valueName }}
 							</td>
 							<td>
-								<el-col :span="21">
-									<el-input size="small" v-model="item.retailPrice" class="ipt-text"></el-input>
-								</el-col>
-								<el-col :span="3">元</el-col>
+								<el-input size="small" v-model="item.retailPrice" class="ipt-text">
+									<template slot="prepend">￥</template>
+									<template slot="append">元</template>
+								</el-input>
 							</td>
 							<td>
-								<el-col :span="21">
-									<el-input size="small" v-model="item.disPrice" class="ipt-text"></el-input>
-								</el-col>
-								<el-col :span="3">元</el-col>
+								<el-input size="small" v-model="item.disPrice" class="ipt-text">
+									<template slot="prepend">￥</template>
+									<template slot="append">元</template>
+								</el-input>
 							</td>
 							<td v-if="showSpecials">								
-								<el-col :span="21">									
-									<el-input size="small" v-model="item.activityPrice" class="ipt-text"></el-input>
-								</el-col>
-								<el-col :span="3">元</el-col>
+								<el-input size="small" v-model="item.activityPrice" class="ipt-text">
+									<template slot="prepend">￥</template>
+									<template slot="append">元</template>
+								</el-input>
 							</td>
 							<td>
-								<el-col :span="21">
-									<el-input size="small" v-model="item.stock" class="ipt-text"></el-input>
-								</el-col>
-								<el-col :span="3">个</el-col>
+								<el-input size="small" v-model="item.stock" class="ipt-text">
+									<template slot="append">个</template>
+								</el-input>
 							</td>
 						</tr>
 					</table>
@@ -152,20 +151,20 @@ export default {
 	data() {
 		return {
 			ruleForm: {				
-				categoryValue: '',					// 所选分类
+				categoryValue: '',				// 所选分类
 				brandsValue: '',					// 所选品牌
-				checkList: [],						// 所选商品标签
-				goodsName: '',						// 商品名称
-				introduction: '',					// 商品简介
+				checkList: [],					// 所选商品标签
+				goodsName: '',					// 商品名称
+				introduction: '',				// 商品简介
 				specialTime: '',					// 特价时间
 			},
 			showSpecials: false,
-			selectedValues: [],						// 多选框选择的sku信息
+			selectedValues: [],					// 多选框选择的sku信息
 			rules: {								// 表单验证（这里使用的是element-ui自带的表单验证）
 			  	categoryValue: [					// 商品分组验证
 			    	{ required: true, message: '请选择一个商品分组', trigger: 'change' }
 			  	],
-			  	brandsValue: [						// 商品品牌验证
+			  	brandsValue: [					// 商品品牌验证
 			    	{ required: true, message: '请选择商品所属品牌', trigger: 'change' }
 			  	],
 			  	checkList: [						// 商品标签验证
@@ -175,7 +174,7 @@ export default {
 			  		{ required: true, message: '请输入活动名称', trigger: 'blur' },
 					{ min: 3, message: '字符长度不得少于3个字符', trigger: 'blur' }
 			  	],
-			  	introduction: [						// 商品简介
+			  	introduction: [					// 商品简介
 			    	{ required: true, message: '请填写商品简介', trigger: 'blur' }
 			  	],
 			},
@@ -268,7 +267,7 @@ export default {
 			
 			return createSku.init(this.selectedValues);
 		},
-	},	
+	},
 	
 	created() {
 		this.createValues();
@@ -340,45 +339,42 @@ export default {
     transition: .2s;
     background-color: #fff;
     &:hover {
-    	box-shadow: 0 0 8px 0 rgba(232,237,250,.6),0 2px 4px 0 rgba(232,237,250,.5)
+    		box-shadow: 0 0 8px 0 rgba(232,237,250,.6),0 2px 4px 0 rgba(232,237,250,.5)
     }
     .sku-selected-table {
-    	width: 400px;
-    	border-collapse: collapse;
-    	th {
-    		text-align: center;
-    		background-color: #f2f2f2;
-    		border: 1px solid #ddd;
-    	}
-    	td {
-    		padding: 10px;
-    		border: 1px solid #ddd;
-    	}
+	    	width: 400px;
+	    	border-collapse: collapse;
+	    	th {
+	    		text-align: center;
+	    		background-color: #f2f2f2;
+	    		border: 1px solid #ddd;
+	    	}
+	    	td {
+	    		padding: 10px;
+	    		border: 1px solid #ddd;
+	    	}
     }
     .sku-table {
-    	width: 800px;
-    	margin-bottom: 10px;
-    	border-collapse: collapse;
-    	.label-title {
-    		width: 120px;
-    	}
-    	th {
-			padding: 8px 0;    		
-    		line-height: 20px;
-    		text-align: center;
-    		border: 1px solid #bfc3d9;
-    		background-color: #f2f2f2;
-    	}
-    	td {
-    		padding: 3px 10px;
-    		border: 1px solid #bfc3d9;
-    	}
-    	tr:hover td{
-    		background-color: #fafafa;
-    	}
-    }
-    .ipt-text {
-    	max-width: 80px;
+	    	width: 800px;
+	    	margin-bottom: 10px;
+	    	border-collapse: collapse;
+	    	.label-title {
+	    		width: 150px;
+	    	}
+	    	th {
+				padding: 8px 0;    		
+	    		line-height: 20px;
+	    		text-align: center;
+	    		border: 1px solid #bfc3d9;
+	    		background-color: #f2f2f2;
+	    	}
+	    	td {
+	    		padding: 3px 10px;
+	    		border: 1px solid #bfc3d9;
+	    	}
+	    	tr:hover td{
+	    		background-color: #fafafa;
+	    	}
     }
 }
 </style>
