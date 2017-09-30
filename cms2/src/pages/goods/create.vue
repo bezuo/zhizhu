@@ -14,6 +14,7 @@
 		      			</el-radio>
 				    </el-radio-group>
 			 	</el-form-item>
+			 	
 		 		<el-form-item label="菜品简介：" prop="desc">
 	    				<el-input type="textarea" v-model="ruleForm.desc" size="small" :rows="3" style="max-width: 520px;"></el-input>
   				</el-form-item>
@@ -28,6 +29,11 @@
 							{{ arr.valueName }}
 						</el-checkbox>
 					</el-checkbox-group>
+					<el-button size="small" icon="edit" type="info" 
+						v-show="selectedValues[index].values.length != 0" 
+						@click="editNameDialog(index)">
+						编辑名称
+					</el-button>
   				</el-form-item>
   				
 				<el-form-item>
@@ -36,14 +42,14 @@
 							<th class="item-bar" v-for="(item, index) in selectedValues" v-if="item.values.length > 0">
 								{{ item.propName }}
 							</th>
-							<th class="">价格</th>
+							<th>价格</th>
 						</tr>
 						<tr v-for="(item, index) in createdSkuItems">
 							<td v-for="arr in item.values">
 								{{ arr.valueName }}
 							</td>
-							<td>
-								<el-input v-model="item.price" size="small">
+							<td style="text-align: center;">
+								<el-input v-model="item.price" size="small" class="ipt-text">
 									<template slot="prepend">￥</template>
 									<template slot="append">元</template>
 								</el-input>
@@ -72,6 +78,26 @@
 				</el-form-item>
 			</el-form>
 			
+			<el-dialog title="编辑属性名称" :visible.sync="editDialog.visible">
+				<div :span="24">
+					<table class="editNameTable">
+						<tr>
+							<th class="el-col-10">原名称</th>
+							<th class="el-col-14">编辑名称</th>
+						</tr>
+						<tr v-for="item in selectedValues[editDialog.index].values">
+							<td>{{ item.valueName }}</td>
+							<td>
+								<el-input size="small" v-model="item.editValueName"></el-input>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<span slot="footer" class="dialog-footer">
+				    <el-button size="small" @click="editDialog.visible = false">取 消</el-button>
+				    <el-button size="small" type="primary" @click="editValueNameSubmit">确 定</el-button>
+			  	</span>
+			</el-dialog>
 		</el-col>
 	</section>
 </template>
@@ -86,6 +112,10 @@ export default {
 				name: "",						// 菜品名称
 				desc: "",						// 菜品简介
 				goodsSort: "",					// 菜品分组
+			},
+			editDialog: {						// 编辑sku名称弹框
+				visible: false,					// 控制弹框显示隐藏
+				index: 0,						// 修改的sku索引
 			},
 			selectedValues: [],					// 多选框选择的sku组合信息
 			rules: {
@@ -131,13 +161,13 @@ export default {
 					valueId: '014'
 				},{
 					valueName: '大份',
-					valueId: '014'
-				},{
-					valueName: '中份',
 					valueId: '015'
 				},{
-					valueName: '小份',
+					valueName: '中份',
 					valueId: '016'
+				},{
+					valueName: '小份',
+					valueId: '017'
 				}]
 			}]
 		}
@@ -169,9 +199,13 @@ export default {
 			});
 			
 			this.selectedValues = arr;
-			console.log(this.selectedValues);
+//			console.log(this.selectedValues);
 		},
 		createGoods(formName) {
+			
+			// 生成需要提交的sku数据
+        		createSku.submitSku(this.createdSkuItems, this.selectedValues);
+        	
 	        this.$refs[formName].validate((valid) => {
 	          	if (valid) {
 	            		alert('submit!');
@@ -180,6 +214,21 @@ export default {
 		            return false;
       			}
         		});
+      	},
+      	
+      	editNameDialog(index) {
+      		this.editDialog.visible = true;
+      		this.editDialog.index = index;
+      		this.editDialog.oddName = this.skuArr[index].values;
+      	},
+      	
+      	editValueNameSubmit() {
+      		let i = this.editDialog.index;
+      		this.selectedValues[i].values.forEach((value, index) => {
+      			value.valueName = value.editValueName || value.valueName;
+      			value.editValueName = "";
+      		})
+      		this.editDialog.visible = false;
       	},
       	
       	handleRemove(file, fileList) {
@@ -221,6 +270,27 @@ export default {
 		}
 		td {
 			padding: 8px;
+			border: 1px solid #ddd;
+			.ipt-text {
+				min-width: 120px;
+				max-width: 150px;
+				margin: 0 auto;
+			}
+		}
+	}
+	.editNameTable {
+		width: 100%;
+		border: 0 none;
+		border-collapse: collapse;
+		th {
+			float: none;
+			padding: 8px 0;
+			text-align: center;
+			border: 1px solid #ddd;
+			background-color: #eeeff6;
+		}
+		td {
+			padding: 10px;
 			border: 1px solid #ddd;
 		}
 	}

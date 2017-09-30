@@ -139,3 +139,6 @@ body .fn-hide { display: none; }
 	padding: 10px 10px 0;
 	background-color: #f2f2f2;
 }
+.el-time-spinner__item {
+	text-align: center;
+}

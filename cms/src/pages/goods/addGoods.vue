@@ -48,16 +48,11 @@
 							{{ arr.valueName }}
 						</el-checkbox>
 					</el-checkbox-group>
-					<!--<table class="sku-selected-table" v-if="selectedValues[index].values.length">
-						<tr>
-							<th>编辑名称</th>
-						</tr>
-						<tr v-for="arr in selectedValues[index].values">
-							<td>
-								<el-input size="small" resize="horizontal" v-model="arr.valueName"></el-input>
-							</td>
-						</tr>
-					</table>-->
+					<el-button size="small" icon="edit" type="info" 
+						v-show="selectedValues[index].values.length != 0" 
+						@click="editNameDialog(index)">
+						编辑名称
+					</el-button>
 				</el-form-item>
 				
 				<el-form-item label="特价时间：">
@@ -139,7 +134,28 @@
 					<el-button type="primary" @click="submitForm('ruleForm')">添加商品</el-button>
 					<el-button @click="backwards">返回商品列表</el-button>
 				</el-form-item>
-			</el-form>	
+			</el-form>
+			
+			<el-dialog title="编辑属性名称" :visible.sync="editDialog.visible">
+				<div :span="24">
+					<table class="editNameTable">
+						<tr>
+							<th class="el-col-10">原名称</th>
+							<th class="el-col-14">编辑名称</th>
+						</tr>
+						<tr v-for="item in selectedValues[editDialog.index].values">
+							<td>{{ item.valueName }}</td>
+							<td>
+								<el-input size="small" v-model="item.editValueName"></el-input>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<span slot="footer" class="dialog-footer">
+				    <el-button size="small" @click="editDialog.visible = false">取 消</el-button>
+				    <el-button size="small" type="primary" @click="editValueNameSubmit">确 定</el-button>
+			  	</span>
+			</el-dialog>
 		</el-col>
 	</section>
 </template>
@@ -159,6 +175,10 @@ export default {
 				specialTime: '',					// 特价时间
 			},
 			showSpecials: false,
+			editDialog: {						// 编辑sku名称弹框
+				visible: false,					// 控制弹框显示隐藏
+				index: 0,						// 修改的sku索引
+			},
 			selectedValues: [],					// 多选框选择的sku信息
 			rules: {								// 表单验证（这里使用的是element-ui自带的表单验证）
 			  	categoryValue: [					// 商品分组验证
@@ -306,13 +326,28 @@ export default {
 			return this.showSpecials = strDate ? true : false;
 		},
 		
+		editNameDialog(index) {
+      		this.editDialog.visible = true;
+      		this.editDialog.index = index;
+      		this.editDialog.oddName = this.skuArr[index].values;
+      	},
+      	
+      	editValueNameSubmit() {
+      		let i = this.editDialog.index;
+      		this.selectedValues[i].values.forEach((value, index) => {
+      			value.valueName = value.editValueName || value.valueName;
+      			value.editValueName = "";
+      		})
+      		this.editDialog.visible = false;
+      	},
+		
 		submitForm(formName) {						// 表单提交
 //			console.log(this.createdSkuItems);
         	
-        	// 生成需要提交的sku数据
-        	createSku.submitSku(this.createdSkuItems, this.selectedValues);
-        	
-        	this.$refs[formName].validate((valid) => {
+        		// 生成需要提交的sku数据
+	        	createSku.submitSku(this.createdSkuItems, this.selectedValues);
+	        	
+	        	this.$refs[formName].validate((valid) => {
 	          	if (valid) {
 	          		
 	            	alert('submit!');
@@ -362,7 +397,7 @@ export default {
 	    		width: 150px;
 	    	}
 	    	th {
-				padding: 8px 0;    		
+			padding: 8px 0;    		
 	    		line-height: 20px;
 	    		text-align: center;
 	    		border: 1px solid #bfc3d9;
@@ -371,10 +406,29 @@ export default {
 	    	td {
 	    		padding: 3px 10px;
 	    		border: 1px solid #bfc3d9;
+	    		.ipt-text {
+	    			min-width: 120px;
+	    		}
 	    	}
 	    	tr:hover td{
 	    		background-color: #fafafa;
 	    	}
     }
+    .editNameTable {
+		width: 100%;
+		border: 0 none;
+		border-collapse: collapse;
+		th {
+			float: none;
+			padding: 8px 0;
+			text-align: center;
+			border: 1px solid #ddd;
+			background-color: #eeeff6;
+		}
+		td {
+			padding: 10px;
+			border: 1px solid #ddd;
+		}
+	}
 }
 </style>
