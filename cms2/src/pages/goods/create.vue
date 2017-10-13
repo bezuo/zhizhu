@@ -144,14 +144,20 @@ export default {
 				propId: "01",
 				propName: '口味',
 				values: [{
-					valueName: '香辣',
+					valueName: '麻辣',
 					valueId: '011'
 				},{
-					valueName: '麻辣',
+					valueName: '超辣',
 					valueId: '012'
 				},{
-					valueName: '蒜蓉',
+					valueName: '中辣',
 					valueId: '013'
+				},{
+					valueName: '微辣',
+					valueId: '014'
+				},{
+					valueName: '免辣',
+					valueId: '015'
 				}]
 			},{
 				propId: '02',

@@ -10,7 +10,7 @@
 			<table class="table">
 				<tr>
 					<th class="el-col-5">餐桌名称</th>
-					<th class="el-col-7">二维码</th>
+					<th class="el-col-7">餐桌二维码</th>
 					<th class="el-col-6">时间信息</th>
 					<th class="el-col-6">操作</th>
 				</tr>
@@ -22,7 +22,7 @@
 						</div>
 					</td>
 					<td>
-						<p>创建时间：{{ item.createTime }}</p>
+						<p>添加时间：{{ item.createTime }}</p>
 						<p v-show="item.updateTime">修改时间：{{ item.updateTime }}</p>
 					</td>
 					<td>
@@ -30,7 +30,7 @@
 							@click="editDeskFun(item)">编辑
 						</el-button>
 						<el-button size="small" icon="delete2" type="danger"
-							@click="deleteFun(item)">删除
+							@click="deleteFun(item.id)">删除
 						</el-button>
 					</td>
 				</tr>
@@ -60,7 +60,7 @@
 			</el-form>			
 			<div slot="footer" class="dialog-footer" style="text-align: right;">
 		    		<el-button size="small" icon="circle-close" @click="addDeskDialog = false">取 消</el-button>
-		    		<el-button size="small" icon="circle-check" type="primary" @click="addDeskSubmit">确 定</el-button>
+		    		<el-button size="small" icon="circle-check" type="primary" @click="addDeskSubmit" :loading="loading">确 定</el-button>
 		  	</div>
 		</el-dialog>
 		<!-- / add sort end -->
@@ -74,7 +74,7 @@
 			</el-form>			
 			<div slot="footer" class="dialog-footer" style="text-align: right;">
 		    		<el-button size="small" icon="circle-close" @click="editDeskDialog = false">取 消</el-button>
-		    		<el-button size="small" icon="circle-check" type="primary" @click="editDeskSubmit">确 定</el-button>
+		    		<el-button size="small" icon="circle-check" type="primary" @click="editDeskSubmit" :loading="loading">确 定</el-button>
 		  	</div>
 		</el-dialog>
 		<!-- / edit sort end -->
@@ -87,17 +87,18 @@ import api from '@/util/api'
 export default {
 	data() {
 		return {
-			deskList: '',			// 桌子列表
-			totalCount: 0,			// 桌子总算量
-			totalPage: 0,			// 总分页数
-			pageSize: 0,				// 每页数量
-			currPage: 0,				// 当前分页
-			addDeskDialog: false,	// 控制添加桌子弹窗显示隐藏
+			loading: false,				// 页面加载状态
+			deskList: '',				// 桌子列表
+			totalCount: 0,				// 桌子总数量
+			totalPage: 0,				// 总分页数
+			pageSize: 20,				// 每页数量
+			currPage: 0,					// 当前分页
+			addDeskDialog: false,		// 控制添加桌子弹窗显示隐藏
 			addDeskData: {
 				deskMerchantId: 0,
-				deskNumber: "",
+				deskNumber: ""
 			},
-			editDeskDialog: false,	// 控制添加桌子弹窗显示隐藏
+			editDeskDialog: false,		// 控制添加桌子弹窗显示隐藏
 			editDeskData: "",			
 		}
 	},
@@ -107,25 +108,27 @@ export default {
 	methods: {
 		
 		getDeskList(params) {			// 请求餐桌列表信息
-			api.getDeskList(params).then((res) => {			
-				if(!res) return false;
-				this.deskList = res.page.list;
-				this.totalCount = res.page.totalCount;
-				this.totalPage = res.page.totalPage;
-				this.pageSize = res.page.pageSize;
-				this.currPage = res.page.currPage;
+			api.getDeskList(params).then((res) => {
+				if(res.code == 0) {
+					this.deskList = res.page.list;
+					this.totalCount = res.page.totalCount;
+					this.totalPage = res.page.totalPage;
+					this.pageSize = res.page.pageSize;
+					this.currPage = res.page.currPage;
+				}
 			});	
 		},
 		
 		addDeskSubmit() {				// 添加餐桌
-			
+			this.loading = true;
 			api.createDesk(this.addDeskData).then((res) => {
+				this.loading = false;
 				if(res.code == 0) {
 					this.addDeskDialog = false;
 					this.getDeskList();
 					this.$message({
-		            		type: 'success',
-		            		message: '添加成功!'
+						type: 'success',
+						message: '添加成功!'
 		          	});
 	          	}
 			});
@@ -135,39 +138,75 @@ export default {
 			this.editDeskDialog = true;
 			this.editDeskData = obj;
 		},
-		editDeskSubmit() {				// 编辑餐桌提交
+		editDeskSubmit() {				// 修改餐桌提交
 			
+			let str = this.editDeskData.deskNumber;
+			if(!str) {
+				this.$message({
+					type: 'warning',
+					message: '输入有误，请重新输入!'
+	          	});
+	          	return false;
+			};
+			this.loading = true;
 			api.editDesk(this.editDeskData).then((res) => {
-								
-				this.editDeskDialog = false;
+				this.loading = false;
+				if(res.code == 0) {
+					this.editDeskDialog = false;
+					this.$message({
+						type: 'success',
+						message: '修改成功!'
+		          	});
+				}
 			})
 		},
 		deleteFun(id) {					// 删除餐桌
+			
 			this.$confirm('该操作将删除该分组以及该分组下的所有商品，是否继续？', '提示', {
 	          	confirmButtonText: '确定',
 	          	cancelButtonText: '取消',
 	          	type: 'warning',
-	        }).then(() => {
-	          	this.$message({
-	            		type: 'success',
-	            		message: '删除成功!'
-	          	});
+	       	}).then(() => {
+				api.deleteDesk(id).then((res) => {
+		          	
+		          	let data = {
+		      			page: this.currPage,
+		      			limit: this.pageSize
+		      		};
+		      		
+		          	this.getDeskList({params: data});
+		          	this.$message({
+						type: 'success',
+						message: '删除成功!'
+		          	});
+				});
 	        }).catch(() => {
 	          	this.$message({
-	            		type: 'info',
-	            		message: '取消该操作！'
-	          	});          
+					type: 'info',
+					message: '删除取消！'
+	          	});
 	        });
 		},
 		
-		handleSizeChange(val) {
-        		console.log(`每页${val} 条`);
+		handleSizeChange(val) {						// 修改每页数据条数
+			let data = {
+      			page: this.currPage,
+      			limit: val
+      		};     		
+      		this.getDeskList({params: data});
       	},
-      	handleCurrentChange(val) {
-        		console.log(`当前页: ${val}`);
+      	
+      	handleCurrentChange(val) {					// 切换分页
+      		
+      		let data = {
+      			page: val,
+      			limit: this.pageSize
+      		};
+      		
+      		this.getDeskList({params: data});
       	},
 	},
-	filters: {
+	filters: {										// 过滤器
 //		formatTime: function(value) {
 //			if(!value) return;
 //			let commonTime, unixTimestamp = new Date(value);			

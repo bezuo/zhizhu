@@ -1,7 +1,7 @@
 import login from '@/pages/login/login'
 import index from '@/pages/index'
 import orderList from '@/pages/order/orderList'
-import sort from '@/pages/sort/sort'
+import categery from '@/pages/categery/categery'
 import goodsList from '@/pages/goods/list'
 import createGoods from '@/pages/goods/create'
 import editGoods from '@/pages/goods/edit'
@@ -40,7 +40,7 @@ let routes = [
   		iconCls: 'iconfont icon-fa-fenlei',
 	  	leaf: true,
 	  	children: [
-			{ path: '/sort', component: sort, name: '分类管理' }
+			{ path: '/categery', component: categery, name: '分类管理' }
 		]
 	},
 	{
