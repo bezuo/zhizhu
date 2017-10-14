@@ -1,9 +1,9 @@
 <template>
 	<header class="header">
-		<div	 class="left-box" v-if="headerObj.leftShow" @click="">
-			<span class=""></span>
+		<div	 class="left-box" v-if="headerObj.leftShow" @click="backtrackFun">
+			<span class="iconfont backtrack">&#xe624;</span>
 		</div>
-		<div class="right-box" v-if="headerObj.rightText">{{ headerObj.rightText }}</div>
+		<div class="right-box" v-if="headerObj.rightText" @click="chilCall">{{ headerObj.rightText }}</div>
 		<h1 class="title">{{ headerObj.title }}</h1>
 	</header>
 </template>
@@ -22,6 +22,13 @@ export default {
 	
 	methods: {
 		
+		backtrackFun() {					// 返回上一页
+			this.$router.back(-1);
+		},
+		
+		chilCall() {
+			this.$emit('callBackFun')
+		}		
 	}
 }
 </script>
@@ -39,11 +46,18 @@ export default {
 	margin: 0 auto;
 	border-bottom: 1px solid #d8d8d8;
 	background-color: #fff;
-	box-sizing: border-box;
+	box-sizing: border-box;	
 	.left-box {
 		float: left;
 		width: px2rem(187px);
 		height: px2rem(88px);
+		.backtrack {
+			padding-left: px2rem(22px);
+			font-size: px2rem(32px);
+			line-height: px2rem(88px);
+			color: $color333 * 3;
+			font-weight: bold;			
+		}
 	}
 	.title {
 		margin: 0 px2rem(187px);

@@ -9,28 +9,18 @@
 			<h2 class="title">餐桌：09A</h2>
 			<section class="content-box">
 				<h3>点餐信息</h3>
-				<div class="item-food">
+				<div class="item-food" v-for="(item, index) in itemsFood">
 					<div class="food-box">
-						<h4 class="food-title">墨鱼卷寿司</h4>
-						<p>三文鱼含有大量优质蛋白质</p>
+						<h4 class="food-title">{{ item.foodTitle }}</h4>
+						<p>{{ item.introduction }}</p>
 					</div>
 					<div class="price-and-quantity">
-						<em class="price">￥69.00</em>
-						<i class="quantity">×1</i>
+						<em class="price">￥{{ item.price | filterPrice }}</em>
+						<i class="quantity">×{{ item.quantity }}</i>
 					</div>
-				</div>
-				<div class="item-food">
-					<div class="food-box">
-						<h4 class="food-title">墨鱼卷寿司</h4>
-						<p>三文鱼含有大量优质蛋白质</p>
-					</div>
-					<div class="price-and-quantity">
-						<em class="price">￥69.00</em>
-						<i class="quantity">×1</i>
-					</div>
-				</div>
+				</div>				
 				<div class="items-total">
-					合计：<em class="items-price">￥138.00</em>
+					合计：<em class="items-price">￥{{ totalPrice | filterPrice }}</em>
 				</div>
 			</section>
 			
@@ -38,7 +28,11 @@
 				<div class="item-btm">
 					<div class="item-label">用餐人数</div>
 					<div class="item-right">
-						
+						<div class="people-quantity">							
+							<span class="iconfont" @click="count('-1')">&#xe672;</span>
+							<em class="people">{{ people }}</em>
+							<span class="iconfont" @click="count('1')">&#xe688;</span>
+						</div>
 					</div>
 				</div>
 				<div class="item-btm">
@@ -54,10 +48,10 @@
 		<!-- footer start -->
 		<footer class="footer">
 			<div class="left-box">
-				总计：<em class="total-pirce">￥138.00</em>
+				总计：<em class="total-pirce">￥{{ totalPrice | filterPrice }}</em>
 			</div>
 			<div class="btn-box">
-				<button class="btn" @click="">支付</button>
+				<button class="btn" @click="pay">支付</button>
 			</div>
 		</footer>
 		<!-- / footer end -->
@@ -75,18 +69,63 @@ export default {
 				leftShow: true,				// 返回按钮
 				rightText: ""				// 右上角文字
 			},
+			people: 1,
+			itemsFood: [{
+				foodTitle: '墨鱼卷寿司',
+				introduction: '三文鱼含有大量优质蛋白质',
+				price: '39',
+				quantity: '1'
+			},{
+				foodTitle: '蒜苗肉丝',
+				introduction: '三文鱼含有大量优质蛋白质',
+				price: '21',
+				quantity: '2'
+			}]
 		}
 	},
 	
 	created() {
 		
 	},
+	
+	computed: {
+		totalPrice() {			// 计算订单总金额
+			
+			let total = 0;
+			this.itemsFood.forEach((item, index) => {
+				total += item.price * item.quantity;				
+			})
+			return total;
+		}
+	},
+	
 	components: {
 		vHeader,
 	},
 	
 	methods: {
+		count(i) {				// 增减用餐人数
+			
+			let x = parseInt(this.people);			
+			if(i != '-1') {
+				this.people = x + parseInt(i);
+			} else {
+				if(x != 1) {					
+					this.people = x + parseInt(i);
+				}
+			}
+		},
 		
+		pay() {					// 订单支付
+			this.$router.push('/success');
+		}
+	},
+	
+	filters: {
+		filterPrice(value) {
+			if(!value) return;
+			return parseInt(value).toFixed(2);
+		}
 	}
 }
 </script>
@@ -177,6 +216,19 @@ export default {
 					width: px2rem(580px);
 					padding-right: px2rem(30px);
 					box-sizing: border-box;
+					.people-quantity {
+						line-height: px2rem(88px);
+						text-align: right;
+						color: $colorYellow;
+						.iconfont {
+							font-size: px2rem(40px);							
+						}
+						.people {
+							margin: 0 px2rem(24px);
+							vertical-align: px2rem(4px);
+							font-size: px2rem(30px);
+						}
+					}
 					.ipt-text {
 						width: 100%;
 						height: px2rem(88px);

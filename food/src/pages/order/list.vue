@@ -24,7 +24,7 @@
 					</div>
 					<div class="food-content">
 						<h4 class="title-food">{{ list.foodTitle }}</h4>
-						<p class="price">￥{{ list.price * list.quantity }}</p>
+						<p class="price">￥{{ list.price * list.quantity | filterPrice}}</p>
 					</div>
 					<div class="quantity">
 						<em>×{{ list.quantity }}</em>
@@ -61,13 +61,35 @@ export default {
 	],
 	
 	methods: {
-		gotoMerchant(id) {			// 跳转至店铺
+		gotoMerchant(id) {					// 跳转至店铺
 			this.$router.push('/home/'+ id);
 			return false;
 		},
 		
-		btnSubmit(status) {			// 点击订单按钮
-			console.log(status);
+		btnSubmit(status) {					// 点击订单按钮
+			
+			switch(status) {
+				case '1':					// 用餐中————加菜
+					console.log("1");
+					break;
+				case '2':					// 待接单————催单
+					console.log("2");
+					break;
+				case '3':					// 待买单————买单
+					console.log("3");
+					break;
+				case '4':					// 已取消————重新下单
+					console.log("4");
+					break;
+				case '5':					// 已完成————待评价
+					this.$router.push('/createComment');
+					break;
+			}
+		}
+	},
+	filters: {
+		filterPrice(value) {
+			return value.toFixed(2);
 		}
 	}
 }

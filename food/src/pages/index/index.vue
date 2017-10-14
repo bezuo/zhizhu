@@ -1,7 +1,7 @@
 <template>
 	<section class="container">
 		<!-- header start -->
-		<v-header :headerObj="headerObj"></v-header>		
+		<v-header :headerObj="headerObj" @callBackFun="parentLisen"></v-header>		
 		<!-- / header end -->
 		
 		<!-- banner start -->
@@ -11,35 +11,13 @@
 		<!-- navbar start -->
 		<section class="nav-bar">
 			<router-link tag="div" class="nav-item"
-				:to="{path:'/index'}">
+				v-for="(item, index) in itemsCategery"
+				:key="index"
+				:to="{path:'/categery/' + item.categeryId}">
 				<div class="nav-img">					
-					<img src=""/>
+					<img v-lazy="item.categeryImg"/>
 				</div>
-				<em>正餐</em>
-			</router-link>
-			
-			<router-link tag="div" class="nav-item"
-				:to="{path:'/index'}">
-				<div class="nav-img">					
-					<img src=""/>
-				</div>
-				<em>汉堡</em>
-			</router-link>
-			
-			<router-link tag="div" class="nav-item"
-				:to="{path:'/index'}">
-				<div class="nav-img">					
-					<img src=""/>
-				</div>
-				<em>夜市</em>
-			</router-link>
-			
-			<router-link tag="div" class="nav-item"
-				:to="{path:'/index'}">
-				<div class="nav-img">					
-					<img src=""/>
-				</div>
-				<em>饮品</em>
+				<em>{{ item.categeryName }}</em>
 			</router-link>
 		</section>
 		<!-- / navbar end -->
@@ -58,14 +36,14 @@
 <script>
 import vHeader from '@/components/header'
 import vBanner from '@/components/banner'
-import vList from './list'
+import vList from '@/components/merchantList'
 
 export default {
 	data() {
 		return {
 			headerObj: {
 				title: "点餐首页",			// 头部标题
-				leftShow: true,				// 返回按钮
+				leftShow: false,				// 返回按钮
 				rightText: "订单"			// 右上角文字
 			},
 			itemsBanner: [{					// banner数据
@@ -74,6 +52,23 @@ export default {
 			},{
 				banner_url: '#',
 				banner_img: '../static/img/banner.602c0dc.png'
+			}],
+			itemsCategery: [{
+				categeryId: "11",
+				categeryName: '正餐',
+				categeryImg: '../static/img/nav-01.png'
+			},{
+				categeryId: "12",
+				categeryName: '汉堡',
+				categeryImg: '../static/img/nav-02.png'
+			},{
+				categeryId: "13",
+				categeryName: '夜市',
+				categeryImg: '../static/img/nav-03.png'
+			},{
+				categeryId: "14",
+				categeryName: '饮品',
+				categeryImg: '../static/img/nav-04.png'
 			}],
 			itemsMerchant: [{				// 餐厅列表数据
 				merchantId: 1,
@@ -114,7 +109,9 @@ export default {
 	},
 	
 	methods: {
-		
+		parentLisen(evtValue) {
+			this.$router.push('/order');
+		}
 	}
 }
 </script>
@@ -139,19 +136,23 @@ export default {
 		box-sizing: border-box;
 		.nav-item {
 			flex: 1;
-			padding-top: px2rem(20px);
+			padding-top: px2rem(32px);
 			font-size: px2rem(28px);
 			text-align: center;
 			color: $color333;
 			.nav-img {
-				width: px2rem(120px);
-				height: px2rem(120px);
-				margin: 0 auto;
+				position: relative;
+				width: px2rem(88px);
+				height: px2rem(88px);
+				margin: 0 auto px2rem(20px);
 				overflow: hidden;
-				background-color: $color333 * 3;
 				img {
+					position: absolute;
+					top: 50%;
+					left: 50%;
 					display: block;
 					width: 100%;
+					transform: translate(-50%, -50%);
 				}
 			}
 		}

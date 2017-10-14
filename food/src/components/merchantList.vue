@@ -45,7 +45,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../style/global.scss';
+@import '../style/global.scss';
 
 .item-box {
 	display: flex;
