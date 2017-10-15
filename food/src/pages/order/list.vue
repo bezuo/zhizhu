@@ -36,11 +36,11 @@
 			
 			<!-- time and button start -->
 			<div class="item-btm">
-				<button class="item-btn" @click.stop="btnSubmit(item.orderStatus)" v-if="item.orderStatus == '1'">加菜</button>
-				<button class="item-btn" @click.stop="btnSubmit(item.orderStatus)" v-else-if="item.orderStatus == '2'">催单</button>
-				<button class="item-btn" @click.stop="btnSubmit(item.orderStatus)" v-else-if="item.orderStatus == '3'">买单</button>
-				<button class="item-btn" @click.stop="btnSubmit(item.orderStatus)" v-else-if="item.orderStatus == '4'">重新下单</button>
-				<button class="item-btn" @click.stop="btnSubmit(item.orderStatus)" v-else-if="item.orderStatus == '5'">评价</button>
+				<button class="item-btn" @click.stop="btnSubmit(item)" v-if="item.orderStatus == '1'">加菜</button>
+				<button class="item-btn" @click.stop="btnSubmit(item)" v-else-if="item.orderStatus == '2'">催单</button>
+				<button class="item-btn" @click.stop="btnSubmit(item)" v-else-if="item.orderStatus == '3'">买单</button>
+				<button class="item-btn" @click.stop="btnSubmit(item)" v-else-if="item.orderStatus == '4'">重新下单</button>
+				<button class="item-btn" @click.stop="btnSubmit(item)" v-else-if="item.orderStatus == '5'">评价</button>
 				下单：{{ item.orderTime }}
 			</div>
 			<!-- / time and button end -->
@@ -66,11 +66,14 @@ export default {
 			return false;
 		},
 		
-		btnSubmit(status) {					// 点击订单按钮
+		btnSubmit(obj) {					// 点击订单按钮
+			
+			let status = obj.orderStatus;
+			let id = obj.merchantId;		// 获取商家Id
 			
 			switch(status) {
 				case '1':					// 用餐中————加菜
-					console.log("1");
+					this.gotoMerchant(id);
 					break;
 				case '2':					// 待接单————催单
 					console.log("2");
@@ -79,7 +82,7 @@ export default {
 					console.log("3");
 					break;
 				case '4':					// 已取消————重新下单
-					console.log("4");
+					this.gotoMerchant(id);
 					break;
 				case '5':					// 已完成————待评价
 					this.$router.push('/createComment');
@@ -94,6 +97,7 @@ export default {
 	}
 }
 </script>
+
 
 <style scoped lang="scss">
 @import '../../style/global.scss';

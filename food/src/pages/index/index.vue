@@ -43,15 +43,15 @@ export default {
 		return {
 			headerObj: {
 				title: "点餐首页",			// 头部标题
-				leftShow: false,				// 返回按钮
+				leftShow: false,			// 返回按钮
 				rightText: "订单"			// 右上角文字
 			},
 			itemsBanner: [{					// banner数据
 				banner_url: '#',
-				banner_img: '../static/img/banner.602c0dc.png'
+				banner_img: '../static/img/banner.png'
 			},{
 				banner_url: '#',
-				banner_img: '../static/img/banner.602c0dc.png'
+				banner_img: '../static/img/banner.png'
 			}],
 			itemsCategery: [{
 				categeryId: "11",

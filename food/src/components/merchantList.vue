@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<router-link class="item-box" 
+		<router-link class="item-box" tag="div"
 			v-for="item in itemsMerchant"
 			:to="{path:'/home/' + item.merchantId}"
 			:key="item.merchantId">

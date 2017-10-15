@@ -1,6 +1,6 @@
 <template>
 	<section>
-		<swiper class="banner" :options="bannerSwiperOption">
+		<swiper class="swiper-box" :options="bannerSwiperOption">
 			<swiper-slide class="swiper-item" 
 				v-for="item in itemsBanner" 
 				:key="item.id">
@@ -20,12 +20,18 @@ export default {
 	data() {
 		return {
 			bannerSwiperOption: {
-	        		pagination: '.swiper-pagination',
+        		pagination: '.swiper-pagination',
 				slidesPerView: 'auto',
 				autoplay: 3000,
 				bulletActiveClass: 'cur-orange',
 				paginationClickable: true,
 				autoplayDisableOnInteraction: false
+//				pagination: '.swiper-pagination',
+//				slidesPerView: 1,
+//				autoplay: 5000,
+//				paginationClickable: true,
+//				spaceBetween: 30,
+//				loop: true
 	       	},
 		}
 	},
@@ -45,19 +51,26 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '../style/global.scss';
 
-.banner {
+.swiper-box {
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
 	.swiper-item {
-		a {
-			display: block;
+		height: px2rem(300px);
+		text-align: center;
+		font-size: 18px ;
+		background: #fff;
+		display: flex;
+		-webkit-box-pack: center;
+		-ms-flex-pack: center;
+		justify-content: center;
+		align-items: center;
+		img {
 			width: 100%;
-			img {
-				display:block;
-				width: 100%;
-			}
-		}		
-	}	
+		}
+	}
 }
 </style>

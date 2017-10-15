@@ -1,11 +1,15 @@
 # 蜘蛛旅游
 
-公司的一个外包项目；主要两部分，一个部分属于csm后台，一部分属于H5前台展示页；
+公司的一个外包项目，分为特产、点餐两个子项目；两个子项目分别包含用户H5网站（用户使用）、cms后台管理(商家使用)；
 
-## h5
+## shoppingCMS
 
-h5网站模块代码，项目构建vue + webpack + vue-router;
+特产后台管理系统前端代码，项目构建vue + webpack + vue-router;
 
-## cms
+## foodCMS
 
-文件主要是cms模块代码，项目构建vue + webpack + vue-router;
+点餐后台管理系统前端代码，项目构建vue + webpack + vue-router;
+
+## food
+
+点餐h5网站前端代码，项目构建vue + webpack + vue-router;

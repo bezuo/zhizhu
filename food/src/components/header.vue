@@ -75,6 +75,7 @@ export default {
 		text-align: right;
 		font-size: px2rem(30px);
 		color: $color333 * 3;
+		box-sizing: border-box;
 	}
 }
 </style>
