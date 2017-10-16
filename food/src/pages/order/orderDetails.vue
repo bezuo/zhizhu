@@ -265,7 +265,6 @@ export default {
 		.btn-box {
 			width: px2rem(300px);
 			text-align: center;
-			background-color: $colorYellow;
 			.btn {
 				display: block;
 				width: 100%;
@@ -273,6 +272,7 @@ export default {
 				line-height: px2rem(98px);
 				color: #fff;
 				font-size: px2rem(36px);
+				background-color: $colorYellow;
 			}
 		}
 	}

@@ -82,7 +82,7 @@ html {
 }
 
 .slide-left-enter-active {
-	animation: slideLeft .1s;
+	animation: slideLeft .3s;
 }
 
 @keyframes slideLeft {
