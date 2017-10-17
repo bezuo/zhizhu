@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import { swiper, swiperSlide } from 'vue-awesome-swiper' // vue-awesome-swiper 2.6之后的版本需要手动安装样式文件swiper.css
 
 export default {
 	data() {
@@ -23,15 +23,9 @@ export default {
         		pagination: '.swiper-pagination',
 				slidesPerView: 'auto',
 				autoplay: 3000,
-				bulletActiveClass: 'cur-orange',
+				bulletActiveClass: 'cur-pagination',
 				paginationClickable: true,
 				autoplayDisableOnInteraction: false
-//				pagination: '.swiper-pagination',
-//				slidesPerView: 1,
-//				autoplay: 5000,
-//				paginationClickable: true,
-//				spaceBetween: 30,
-//				loop: true
 	       	},
 		}
 	},
@@ -53,6 +47,7 @@ export default {
 
 <style lang="scss">
 @import '../style/global.scss';
+@import '../style/swiper-3.4.2.min.css';
 
 .swiper-box {
 	width: 100%;
@@ -71,6 +66,10 @@ export default {
 		img {
 			width: 100%;
 		}
+	}
+	.cur-pagination {
+		background-color: $colorYellow;
+		opacity: 1;
 	}
 }
 </style>
