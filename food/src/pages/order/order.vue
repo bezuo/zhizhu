@@ -7,9 +7,15 @@
 		<!-- article start -->
 		<article class="article">
 			<!-- nav start -->
-			<nav class="nav">
-				全部
-			</nav>
+			<v-scroll class="nav" ref="wrapperNav" :scrollX="true">				
+				<ul class="nav-bar">
+					<li @click="">全部</li>
+					<li @click="">待接单</li>
+					<li @click="">用餐中</li>
+					<li @click="">待买单</li>
+					<li @click="">已完成</li>
+				</ul>
+			</v-scroll>
 			<!-- / nav end -->
 			
 			<v-list :itemsOrder="itemsOrder"></v-list>			
@@ -21,6 +27,8 @@
 <script>
 import vHeader from '@/components/header'
 import vList from './list'
+import vScroll from '@/components/scroll'
+import BScroll from 'better-scroll'
 
 export default {
 	data() {
@@ -111,7 +119,8 @@ export default {
 	
 	components: {
 		vHeader,
-		vList
+		vList,
+		vScroll
 	},
 	
 	methods: {
@@ -137,6 +146,20 @@ export default {
 			background-color: #fff;
 			border-bottom: 1px solid #eee;
 			box-sizing: border-box;
+			overflow: hidden;
+			.nav-bar {
+				display: flex;
+				flex: 1;
+				position: relative;
+				overflow-x: hidden;
+				li {
+					width: px2rem(96px);
+					margin: 0 px2rem(38px);
+					color: $color333 * 2;
+					line-height: px2rem(88px);
+					font-size: px2rem(32px);
+				}
+			}
 		}
 	}
 }

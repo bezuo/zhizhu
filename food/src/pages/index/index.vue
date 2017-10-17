@@ -43,7 +43,7 @@ export default {
 		return {
 			headerObj: {
 				title: "点餐首页",			// 头部标题
-				leftShow: false,			// 返回按钮
+				leftShow: false,				// 返回按钮
 				rightText: "订单"			// 右上角文字
 			},
 			itemsBanner: [{					// banner数据
@@ -75,24 +75,28 @@ export default {
 				title: '回旋鱼寿司店',
 				merchantImg: '//img.alicdn.com/imgextra/i3/2203256980/TB1QPQcdGigSKJjSsppXXabnpXa_!!0-item_pic.jpg_640x640Q50s50.jpg',
 				quantity: 118,
+				starNum: 2.3,
 				introduction: '蔬菜是指可以做菜、烹饪成为食品的一类植物'
 			},{
 				merchantId: 2,
 				title: '铂爵婚纱摄影 厦门三亚深圳青岛大连丽江海南杭州大理婚纱照伯爵',
 				merchantImg: '//img.alicdn.com/imgextra/i3/1057559553/TB1RiqiSFXXXXXgXFXXXXXXXXXX_!!0-item_pic.jpg_640x640Q50s50.jpg',
 				quantity: 9482,
+				starNum: 4.5,
 				introduction: '蔬菜是指可以做菜、烹饪成为食品的一类植物'
 			},{
 				merchantId: 3,
 				title: '钟爱一生婚纱摄影三亚厦门丽江大理桂林香格里拉海景拍婚纱照团购',
 				merchantImg: '//img.alicdn.com/imgextra/i4/TB1Zo68RVXXXXbkaXXXXXXXXXXX_!!0-item_pic.jpg_640x640Q50s50.jpg',
 				quantity: 7199,
+				starNum: 4.7,
 				introduction: '蔬菜是指可以做菜、烹饪成为食品的一类植物'
 			},{
 				merchantId: 4,
 				title: '铂爵旅拍婚纱摄影三亚厦门丽江青岛巴厘岛普吉岛拍婚纱照团购伯爵',
 				merchantImg: '//img.alicdn.com/imgextra/i2/TB1DLwrRVXXXXaVXFXXXXXXXXXX_!!0-item_pic.jpg_640x640Q50s50.jpg',
 				quantity: 12537,
+				starNum: 3.2,
 				introduction: '蔬菜是指可以做菜、烹饪成为食品的一类植物'
 			}],
 		}
@@ -120,7 +124,7 @@ export default {
 @import '../../style/global.scss';
 
 .container {
-	padding-top: px2rem(88px);		
+	padding-top: px2rem(88px);
 	.banner {
 		width: px2rem(750px);
 		height: px2rem(300px);

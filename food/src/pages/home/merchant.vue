@@ -1,36 +1,43 @@
 <template>
 	<section>
-		<div class="top-box">
-			<h3 class="title">本店公告</h3>
-			<p>蔬菜是指可以做菜、烹饪成为食品的一类植物或菌类，蔬菜是人们日常饮食中必不可少的食物之一。蔬菜可提供人体所必需的多种维生素和矿物质等营养物质。</p>
-		</div>
-		
-		<div class="bottom">
-			<h3 class="title">商家信息</h3>
-			<ul>
-				<li>飞鱼回转寿司店（景区店）</li>
-				<li>
-					<a href="tel:18745632586" class="fn-right">18745632586</a>
-					<span>商家电话</span>
-				</li>
-				<li>
-					<em class="fn-right">九寨沟景点主路12号</em>
-					<span>商家地址</span>
-				</li>
-				<li>
-					<em class="fn-right">09:00-22:00</em>
-					<span>营业时间</span>
-				</li>
-			</ul>
-		</div>
+		<v-scroll class="wrapper">
+			<section>			
+				<div class="top-box">
+					<h3 class="title">本店公告</h3>
+					<p>蔬菜是指可以做菜、烹饪成为食品的一类植物或菌类，蔬菜是人们日常饮食中必不可少的食物之一。蔬菜可提供人体所必需的多种维生素和矿物质等营养物质。</p>
+				</div>
+				
+				<div class="bottom">
+					<h3 class="title">商家信息</h3>
+					<ul>
+						<li>飞鱼回转寿司店（景区店）</li>
+						<li>
+							<a href="tel:18745632586" class="fn-right">18745632586</a>
+							<span>商家电话</span>
+						</li>
+						<li>
+							<em class="fn-right">九寨沟景点主路12号</em>
+							<span>商家地址</span>
+						</li>
+						<li>
+							<em class="fn-right">09:00-22:00</em>
+							<span>营业时间</span>
+						</li>
+					</ul>
+				</div>
+			</section>
+		</v-scroll>
 	</section>
 </template>
 
 <script>
+import vScroll from '@/components/scroll'
+import BScroll from 'better-scroll'
+
 export default {
 	data() {
 		return {
-			
+			commentScroll: null,  	// 评论列表scroll
 		}
 	},
 	
@@ -38,9 +45,9 @@ export default {
 		
 	},
 	
-	props: [
-	
-	],
+	components: {
+		vScroll,
+	},
 	
 	methods: {
 		

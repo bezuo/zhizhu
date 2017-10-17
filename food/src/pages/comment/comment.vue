@@ -39,7 +39,7 @@
 				<h3>总体评价</h3>
 				<div class="star-box">
 					<span class="iconfont" 
-						v-for="(item, index) in starFun" 
+						v-for="(value, index) in 5" 
 						:class="{'star': index < star}" 
 						@click="star = index + 1">&#xe6e2;
 					</span>
@@ -86,17 +86,6 @@ export default {
 	
 	components: {
 		vHeader
-	},
-	
-	computed: {
-		starFun() {					//用于评论打星
-			let quantity = 5;
-			let arr = [];
-			for(let i=1; i<=5; i++) {
-				arr.push(i);
-			}
-			return arr;
-		}
 	},
 	
 	methods: {

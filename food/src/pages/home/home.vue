@@ -1,5 +1,5 @@
 <template>
-	<section class="container">
+	<section class="shop-container">
 		<!-- header start -->
 		<v-header :headerObj="headerObj" @callBackFun="parentLisen"></v-header>		
 		<!-- / header end -->
@@ -39,17 +39,19 @@
 		</section>
 		<!-- / tab bar end -->
 		
-		<!-- food start -->
-		<v-food v-if="tabIndex == 1" :menuList="menuList"></v-food>
-		<!-- / food end-->
-		
-		<!-- comment start -->
-		<v-comment v-else-if="tabIndex == 2"></v-comment>
-		<!-- / comment end -->
-		
-		<!-- merchant start -->
-		<v-merchant v-else-if="tabIndex == 3"></v-merchant>
-		<!-- / merchant end -->
+		<section class="container-box">			
+			<!-- food start -->
+			<v-food v-if="tabIndex == 1"></v-food>
+			<!-- / food end-->
+			
+			<!-- comment start -->
+			<v-comment v-else-if="tabIndex == 2"></v-comment>
+			<!-- / comment end -->
+			
+			<!-- merchant start -->
+			<v-merchant v-else-if="tabIndex == 3"></v-merchant>
+			<!-- / merchant end -->
+		</section>
 	
 		<!-- footer start -->
 		<footer class="footer">
@@ -82,125 +84,7 @@ export default {
 				leftShow: true,				// 返回按钮
 				rightText: "订单"			// 右上角文字
 			},
-			tabIndex: 1,
-			menuList: [{
-				name: '热销',
-				itemsFood: [{
-					foodId: '13123213',
-					foodImg: '//gw2.alicdn.com/bao/uploaded/i3/TB1d1b.HXXXXXbbXFXXXXXXXXXX_!!0-item_pic.jpg_210x210.jpg',
-					foodTitle: '400克X5袋包邮重庆黔江特产虫草宝塔菜阿蓬江地牯牛泡菜山椒味',
-					foodText: '套餐内含：环球培根四拼芝心比萨*1；意式肉酱面*1；傲椒红火翅2块*2；北美特色枫香烤翅2块*2；香酥鸡米花*1；柠檬三兄弟茶饮*2',
-					price: '39'
-				},{
-					foodId: '13123213',
-					foodImg: '//gw3.alicdn.com/bao/uploaded/i2/42621403/TB2lB.ejUUIL1JjSZFrXXb3xFXa_!!42621403.png_210x210.jpg',
-					foodTitle: '栖息园雪菜笋丝梅菜酱咸菜榨菜 早餐下饭菜配粥拌饭下酒小菜158*6',
-					foodText: '套餐内含：环球培根四拼芝心比萨*1；意式肉酱面*1；傲椒红火翅2块*2；北美特色枫香烤翅2块*2；香酥鸡米花*1；柠檬三兄弟茶饮*2',
-					price: '39'
-				},{
-					foodId: '13123213',
-					foodImg: '//gw2.alicdn.com/bao/uploaded/i1/2431040401/TB1gIINkbsTMeJjy1zbXXchlVXa_!!0-item_pic.jpg_210x210.jpg',
-					foodTitle: '正宗乌江涪陵榨菜清爽清淡88g*100包整箱特价整件特产鲜脆菜丝',
-					foodText: '套餐内含：环球培根四拼芝心比萨*1；意式肉酱面*1；傲椒红火翅2块*2；北美特色枫香烤翅2块*2；香酥鸡米花*1；柠檬三兄弟茶饮*2',
-					price: '39'
-				},{
-					foodId: '13123213',
-					foodImg: '//gw2.alicdn.com/bao/uploaded/i3/TB1d1b.HXXXXXbbXFXXXXXXXXXX_!!0-item_pic.jpg_210x210.jpg',
-					foodTitle: '欢聚比萨3人餐',
-					foodText: '套餐内含：环球培根四拼芝心比萨*1；意式肉酱面*1；傲椒红火翅2块*2；北美特色枫香烤翅2块*2；香酥鸡米花*1；柠檬三兄弟茶饮*2',
-					price: '39'
-				}]
-			},{
-				name: '优惠套餐',
-				itemsFood: [{
-					foodId: '31231313',
-					foodImg: '//gw2.alicdn.com/bao/uploaded/i3/TB1d1b.HXXXXXbbXFXXXXXXXXXX_!!0-item_pic.jpg_210x210.jpg',
-					foodTitle: '欢聚比萨3人餐',
-					foodText: '套餐内含：环球培根四拼芝心比萨*1；意式肉酱面*1；傲椒红火翅2块*2；北美特色枫香烤翅2块*2；香酥鸡米花*1；柠檬三兄弟茶饮*2',
-					price: '39'
-				}]
-			},{
-				name: '特色荷叶饭特色荷叶饭特色荷叶饭',
-				itemsFood: [{
-					foodId: '678667868',
-					foodImg: '//gw2.alicdn.com/bao/uploaded/i3/TB1d1b.HXXXXXbbXFXXXXXXXXXX_!!0-item_pic.jpg_210x210.jpg',
-					foodTitle: '欢聚比萨3人餐',
-					foodText: '套餐内含：环球培根四拼芝心比萨*1；意式肉酱面*1；傲椒红火翅2块*2；北美特色枫香烤翅2块*2；香酥鸡米花*1；柠檬三兄弟茶饮*2',
-					price: '39'
-				}]
-			},{
-				name: '新品推荐',
-				itemsFood: [{
-					foodId: '2423434645',
-					foodImg: '//gw2.alicdn.com/bao/uploaded/i3/TB1d1b.HXXXXXbbXFXXXXXXXXXX_!!0-item_pic.jpg_210x210.jpg',
-					foodTitle: '欢聚比萨3人餐',
-					foodText: '套餐内含：环球培根四拼芝心比萨*1；意式肉酱面*1；傲椒红火翅2块*2；北美特色枫香烤翅2块*2；香酥鸡米花*1；柠檬三兄弟茶饮*2',
-					price: '39'
-				}]
-			},{
-				name: '饭食',
-				itemsFood: [{
-					foodId: '678678654',
-					foodImg: '//gw2.alicdn.com/bao/uploaded/i3/TB1d1b.HXXXXXbbXFXXXXXXXXXX_!!0-item_pic.jpg_210x210.jpg',
-					foodTitle: '欢聚比萨3人餐',
-					foodText: '套餐内含：环球培根四拼芝心比萨*1；意式肉酱面*1；傲椒红火翅2块*2；北美特色枫香烤翅2块*2；香酥鸡米花*1；柠檬三兄弟茶饮*2',
-					price: '39'
-				}]
-			},{
-				name: '小吃',
-				itemsFood: [{
-					foodId: '345346456',
-					foodImg: '//gw2.alicdn.com/bao/uploaded/i3/TB1d1b.HXXXXXbbXFXXXXXXXXXX_!!0-item_pic.jpg_210x210.jpg',
-					foodTitle: '欢聚比萨3人餐',
-					foodText: '套餐内含：环球培根四拼芝心比萨*1；意式肉酱面*1；傲椒红火翅2块*2；北美特色枫香烤翅2块*2；香酥鸡米花*1；柠檬三兄弟茶饮*2',
-					price: '39'
-				}]
-			},{
-				name: '饮料',
-				itemsFood: [{				
-					foodId: '242353445',
-					foodImg: '//gw2.alicdn.com/bao/uploaded/i3/TB1d1b.HXXXXXbbXFXXXXXXXXXX_!!0-item_pic.jpg_210x210.jpg',
-					foodTitle: '欢聚比萨3人餐',
-					foodText: '套餐内含：环球培根四拼芝心比萨*1；意式肉酱面*1；傲椒红火翅2块*2；北美特色枫香烤翅2块*2；香酥鸡米花*1；柠檬三兄弟茶饮*2',
-					price: '39'
-				}]
-			},{
-				name: '汤',
-				itemsFood: [{
-					foodId: '9789789',
-					foodImg: '//gw2.alicdn.com/bao/uploaded/i3/TB1d1b.HXXXXXbbXFXXXXXXXXXX_!!0-item_pic.jpg_210x210.jpg',
-					foodTitle: '欢聚比萨3人餐',
-					foodText: '套餐内含：环球培根四拼芝心比萨*1；意式肉酱面*1；傲椒红火翅2块*2；北美特色枫香烤翅2块*2；香酥鸡米花*1；柠檬三兄弟茶饮*2',
-					price: '39'
-				}]
-			},{
-				name: '凑单',
-				itemsFood: [{
-					foodId: '35345677',
-					foodImg: '//gw2.alicdn.com/bao/uploaded/i3/TB1d1b.HXXXXXbbXFXXXXXXXXXX_!!0-item_pic.jpg_210x210.jpg',
-					foodTitle: '欢聚比萨3人餐',
-					foodText: '套餐内含：环球培根四拼芝心比萨*1；意式肉酱面*1；傲椒红火翅2块*2；北美特色枫香烤翅2块*2；香酥鸡米花*1；柠檬三兄弟茶饮*2',
-					price: '39'
-				}]
-			},{
-				name: '乱七八糟',
-				itemsFood: [{
-					foodId: '5675677',
-					foodImg: '//gw2.alicdn.com/bao/uploaded/i3/TB1d1b.HXXXXXbbXFXXXXXXXXXX_!!0-item_pic.jpg_210x210.jpg',
-					foodTitle: '欢聚比萨3人餐',
-					foodText: '套餐内含：环球培根四拼芝心比萨*1；意式肉酱面*1；傲椒红火翅2块*2；北美特色枫香烤翅2块*2；香酥鸡米花*1；柠檬三兄弟茶饮*2',
-					price: '39'
-				}]
-			},{
-				name: '嘻嘻哈哈',
-				itemsFood: [{
-					foodId: '3453455',
-					foodImg: '//gw2.alicdn.com/bao/uploaded/i3/TB1d1b.HXXXXXbbXFXXXXXXXXXX_!!0-item_pic.jpg_210x210.jpg',
-					foodTitle: '欢聚比萨3人餐',
-					foodText: '套餐内含：环球培根四拼芝心比萨*1；意式肉酱面*1；傲椒红火翅2块*2；北美特色枫香烤翅2块*2；香酥鸡米花*1；柠檬三兄弟茶饮*2',
-					price: '39'
-				}]
-			}]
+			tabIndex: 1
 		}
 	},
 	
@@ -230,8 +114,15 @@ export default {
 <style scoped lang="scss">
 @import '../../style/global.scss';
 	
-.container {
-	padding: px2rem(88px) 0 px2rem(98px);
+.shop-container {
+	display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 100%;
+    padding: px2rem(88px) 0 px2rem(98px);
+    box-sizing: border-box;
 	.merchant {
 		display: flex;
 		padding: px2rem(30px);
@@ -324,6 +215,13 @@ export default {
 				}
 			}
 		}
+	}
+	.container-box {
+		
+		display: flex;
+		flex: 1;
+		position: relative;
+		overflow-y: hidden;
 	}
 	.footer {
 		position: fixed;

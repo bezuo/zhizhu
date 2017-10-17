@@ -13,11 +13,7 @@
 					<em class="quantity">月销{{ item.quantity }}笔</em>
 					<div class="star-box">
 						<span>商家评分</span>
-						<i class=""></i>
-						<i class=""></i>
-						<i class=""></i>
-						<i class=""></i>
-						<i class=""></i>
+						<i class="iconfont" v-for="(value, index) in 5" :class="{'star': index < Math.round(item.starNum)}">&#xe6e2;</i>
 					</div>
 				</div>
 				<p>简介：{{ item.introduction }}</p>
@@ -36,7 +32,7 @@ export default {
 	
 	props: [
 		'itemsMerchant'
-	],
+	],	
 	
 	methods: {
 		
@@ -86,6 +82,16 @@ export default {
 			line-height: px2rem(34px);
 			color: $color333 * 3;
 			font-size: px2rem(24px);
+			.star-box {
+				.iconfont {
+					vertical-align: px2rem(-2px);
+					font-size: px2rem(32px);
+					color: #eee;
+					&.star {
+						color: $colorYellow;
+					}
+				}
+			}
 			.quantity {
 				float: right;
 			}
