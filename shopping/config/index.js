@@ -1,6 +1,6 @@
 
 'use strict'
-// Template version: 1.1.1
+// Template version: 1.1.3
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
@@ -27,19 +27,11 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: process.env.PORT || 8083,
+    port: process.env.PORT || 8085,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-    		'/api': {
-		    target: 'http://118.89.114.153:8088/api/',
-		    changeOrigin: true,
-		    pathRewrite: {
-		      '^/api': ''
-		    }
-		  }
-    },
+    proxyTable: {},
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)

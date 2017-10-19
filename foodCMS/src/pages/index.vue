@@ -1,8 +1,8 @@
 <template>
 	<el-row class="container">
 		<!-- header start -->
-		<el-col :span="24" class="header">
-			<el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
+		<el-col :span="24" class="header" :class="{'fn-hide': hide}">
+			<el-col :span="10" class="logo" :class="[collapsed?'logo-collapse-width':'logo-width']">
 				{{collapsed?'':sysName}}
 			</el-col>
 			<el-col :span="10">
@@ -22,9 +22,9 @@
 		<!-- / header end -->
 		
 		<!-- article start -->
-		<el-col :span="24" class="main">
+		<el-col :span="24" class="main" :class="{'top0px': hide}">
 			<!-- aside start -->
-			<aside :class="collapsed?'menu-collapsed':'menu-expanded'">
+			<aside :class="[collapsed?'menu-collapsed':'menu-expanded',{'fn-hide': hide}]">
 				<!-- Navigation to expand start-->
 				<el-menu class="el-menu-vertical-demo" 
 					:default-active="$route.path"
@@ -124,6 +124,13 @@ export default {
 			sysName:'蜘蛛旅游后台管理系统',
 			collapsed:false,
 			sysUserName: '',
+			hide: false,
+		}
+	},
+	created() {
+		let str = this.$route.query.topLeft;
+		if(str == 'hide') {
+			this.hide = true;
 		}
 	},
 	methods: {
@@ -172,6 +179,10 @@ export default {
 
 <style scoped lang="scss">
 	/*@import '~scss_vars';*/
+
+.top0px {
+	top: 0px	 !important;
+}
 	
 .iconfont {
 	width: 24px;

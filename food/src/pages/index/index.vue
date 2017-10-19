@@ -13,11 +13,11 @@
 			<router-link tag="div" class="nav-item"
 				v-for="(item, index) in itemsCategery"
 				:key="index"
-				:to="{path:'/categery/' + item.categeryId}">
+				:to="{path:'/categery/' + item.id}">
 				<div class="nav-img">					
-					<img v-lazy="item.categeryImg"/>
+					<img v-lazy="item.catImg"/>
 				</div>
-				<em>{{ item.categeryName }}</em>
+				<em>{{ item.catName }}</em>
 			</router-link>
 		</section>
 		<!-- / navbar end -->
@@ -37,6 +37,7 @@
 import vHeader from '@/components/header'
 import vBanner from '@/components/banner'
 import vList from '@/components/merchantList'
+import api from '@/util/api'
 
 export default {
 	data() {
@@ -53,52 +54,8 @@ export default {
 				banner_url: '#',
 				banner_img: '../static/img/banner.png'
 			}],
-			itemsCategery: [{
-				categeryId: "11",
-				categeryName: '正餐',
-				categeryImg: '../static/img/nav-01.png'
-			},{
-				categeryId: "12",
-				categeryName: '汉堡',
-				categeryImg: '../static/img/nav-02.png'
-			},{
-				categeryId: "13",
-				categeryName: '夜市',
-				categeryImg: '../static/img/nav-03.png'
-			},{
-				categeryId: "14",
-				categeryName: '饮品',
-				categeryImg: '../static/img/nav-04.png'
-			}],
-			itemsMerchant: [{				// 餐厅列表数据
-				merchantId: 1,
-				title: '回旋鱼寿司店',
-				merchantImg: '//img.alicdn.com/imgextra/i3/2203256980/TB1QPQcdGigSKJjSsppXXabnpXa_!!0-item_pic.jpg_640x640Q50s50.jpg',
-				quantity: 118,
-				starNum: 2.3,
-				introduction: '蔬菜是指可以做菜、烹饪成为食品的一类植物'
-			},{
-				merchantId: 2,
-				title: '铂爵婚纱摄影 厦门三亚深圳青岛大连丽江海南杭州大理婚纱照伯爵',
-				merchantImg: '//img.alicdn.com/imgextra/i3/1057559553/TB1RiqiSFXXXXXgXFXXXXXXXXXX_!!0-item_pic.jpg_640x640Q50s50.jpg',
-				quantity: 9482,
-				starNum: 4.5,
-				introduction: '蔬菜是指可以做菜、烹饪成为食品的一类植物'
-			},{
-				merchantId: 3,
-				title: '钟爱一生婚纱摄影三亚厦门丽江大理桂林香格里拉海景拍婚纱照团购',
-				merchantImg: '//img.alicdn.com/imgextra/i4/TB1Zo68RVXXXXbkaXXXXXXXXXXX_!!0-item_pic.jpg_640x640Q50s50.jpg',
-				quantity: 7199,
-				starNum: 4.7,
-				introduction: '蔬菜是指可以做菜、烹饪成为食品的一类植物'
-			},{
-				merchantId: 4,
-				title: '铂爵旅拍婚纱摄影三亚厦门丽江青岛巴厘岛普吉岛拍婚纱照团购伯爵',
-				merchantImg: '//img.alicdn.com/imgextra/i2/TB1DLwrRVXXXXaVXFXXXXXXXXXX_!!0-item_pic.jpg_640x640Q50s50.jpg',
-				quantity: 12537,
-				starNum: 3.2,
-				introduction: '蔬菜是指可以做菜、烹饪成为食品的一类植物'
-			}],
+			itemsCategery: [],				// 商家分类
+			itemsMerchant: [],				// 商家列表
 		}
 	},
 	
@@ -109,10 +66,28 @@ export default {
 	},
 	
 	created() {
-		
+		this.getMerchantCategery();
+		this.getMerchantList();
 	},
 	
 	methods: {
+		// 获取商家分类列表
+		getMerchantCategery() {
+			api.getMerchantCategery().then((res) => {
+				if(res.code != "0") return;
+				this.itemsCategery = res.page.list;
+			});
+		},
+		
+		// 获取商家列表
+		getMerchantList() {
+			api.getMerchantList().then((res) => {
+				if(res.code != "0") return;
+				this.itemsMerchant = res.page.list;
+			});
+		},
+		
+		// 跳转至订单列表
 		parentLisen(evtValue) {
 			this.$router.push('/order');
 		}

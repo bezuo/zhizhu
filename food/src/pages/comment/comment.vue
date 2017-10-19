@@ -104,12 +104,7 @@ export default {
 @import '../../style/global.scss';
 
 .container {
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 9;
 	width: px2rem(750px);
-	height: 100%;
 	padding-top: px2rem(88px);
 	background-color: #fff;
 	box-sizing: border-box;

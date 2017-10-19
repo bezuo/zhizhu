@@ -56,7 +56,7 @@
 		<!-- footer start -->
 		<footer class="footer">
 			<div class="footer-left">
-				<div class="shopping-car">
+				<div class="shopping-car" @click="buyCartShow">
 					<span class="iconfont">&#xe60b;</span>
 				</div>
 				<i class="quantity">2</i>
@@ -67,6 +67,14 @@
 			</div>
 		</footer>
 		<!-- / footer end -->
+					
+		<!-- mask box start -->
+		<mask-box v-if="buyCartListShow" @tapMask="tapMask"></mask-box>
+		<!-- / mask box end -->
+		
+		<!-- 购物车列表 start -->
+		<buy-cart-list class="cart-container" :class="{'buy-cart-show': buyCartListShow}"></buy-cart-list>
+		<!-- / 购物车列表 end -->
 	</section>
 </template>
 
@@ -75,6 +83,8 @@ import vHeader from '@/components/header'
 import vFood from './food'
 import vComment from './comment'
 import vMerchant from './merchant'
+import maskBox from '@/components/maskBox'
+import buyCartList from '@/components/buyCartList'
 
 export default {
 	data() {
@@ -84,7 +94,8 @@ export default {
 				leftShow: true,				// 返回按钮
 				rightText: "订单"			// 右上角文字
 			},
-			tabIndex: 1
+			tabIndex: 1,						// 当前tab默认为商品
+			buyCartListShow: false,			// 显示门店购物车列表信息
 		}
 	},
 	
@@ -96,16 +107,30 @@ export default {
 		vHeader,
 		vFood,
 		vComment,
-		vMerchant
+		vMerchant,
+		maskBox,
+		buyCartList
 	},
 	
 	methods: {
-		parentLisen(evtValue) {				// 顶部订单按钮跳转
+		// 顶部订单按钮跳转
+		parentLisen(evtValue) {
 			this.$router.push('/order');
 		},
 		
-		pay(id) {							// 去结算
+		// 去结算
+		pay(id) {
 			this.$router.push('/orderDetails/'+ id)
+		},
+		
+		// 打开店铺购物车列表信息
+		buyCartShow() {
+			this.buyCartListShow = true;
+		},
+		
+		// 点击关闭遮罩层mask-box
+		tapMask() {
+			this.buyCartListShow = false;
 		}
 	},
 }
@@ -119,10 +144,12 @@ export default {
     flex-direction: column;
     position: absolute;
     right: 0;
-    left: 0;
+    left: 50%;
+    width: px2rem(750px);
     height: 100%;
     padding: px2rem(88px) 0 px2rem(98px);
     box-sizing: border-box;
+	transform: translateX(-50%);    
 	.merchant {
 		display: flex;
 		padding: px2rem(30px);
@@ -226,12 +253,13 @@ export default {
 	.footer {
 		position: fixed;
 		bottom: 0;
-		left: 0;
+		left: 50%;
 		z-index: 111;
 		display: flex;
-		width: 100%;
+		width: px2rem(750px);
 		height: px2rem(98px);
 		background-color: #fafafa;
+		transform: translateX(-50%);
 		.footer-left {
 			position: relative;
 			z-index: 112;
@@ -288,6 +316,20 @@ export default {
 				background-color: $colorYellow;
 			}
 		}
+	}
+	.cart-container {
+		position: absolute;
+		bottom: px2rem(98px);
+		left: 0;
+		z-index: 101;
+		width: px2rem(750px);
+		background-color: #fff;
+		transform: transform .3s linear;
+		transform: translate3d(0,100%,0);
+		will-change: transform;
+	}
+	.buy-cart-show {
+		transform: translate3d(0px, 0px, 0px);
 	}
 }
 </style>

@@ -1,22 +1,22 @@
 <template>
 	<section>
 		<router-link class="item-box" tag="div"
-			v-for="item in itemsMerchant"
-			:to="{path:'/home/' + item.merchantId}"
-			:key="item.merchantId">
+			v-for="(item, index) in itemsMerchant"
+			:to="{path:'/home/' + item.id}"
+			:key="index">
 			<div class="img-box">
-				<img v-lazy="item.merchantImg" />
+				<img v-lazy="item.merchantLogo" />
 			</div>
 			<div class="container">
-				<h4 class="title">{{ item.title }}</h4>
+				<h4 class="title">{{ item.merchantName }}</h4>
 				<div class="center-box">
-					<em class="quantity">月销{{ item.quantity }}笔</em>
+					<em class="quantity">月销{{ item.volume }}笔</em>
 					<div class="star-box">
 						<span>商家评分</span>
-						<i class="iconfont" v-for="(value, index) in 5" :class="{'star': index < Math.round(item.starNum)}">&#xe6e2;</i>
+						<i class="iconfont" v-for="(value, index) in 5" :class="{'star': index < Math.round(item.star)}">&#xe6e2;</i>
 					</div>
 				</div>
-				<p>简介：{{ item.introduction }}</p>
+				<p>简介：{{ item.merchantDesc }}</p>
 			</div>
 		</router-link>
 	</section>	
@@ -54,6 +54,7 @@ export default {
 		position: relative;
 		width: px2rem(160px);
 		height: px2rem(160px);
+		background-color: $color333 * 3;
 		img {
 			position: absolute;
 			top: 50%;

@@ -13,7 +13,7 @@
 			<div class="price-buy-cart">
 				<div class="price">￥{{ price | filterPrice }}</div>
 				<div class="buy-car">
-					<v-buy-cart :foods="foods"></v-buy-cart>
+					<!--<v-buy-cart :foods="foods"></v-buy-cart>-->
 				</div>
 			</div>
 		</section>
@@ -37,12 +37,22 @@
 			</div>
 		</footer>
 		<!-- / footer end -->
+		
+		<!-- mask box start -->
+		<mask-box v-if="buyCartListShow | skuSelectedShow" @tapMask="tapMask"></mask-box>
+		<!-- / mask box end -->
+		
+		<!-- sku start -->
+		<v-sku class="sku-box" @skuClose="skuClose" :class="{'sku-show': skuSelectedShow}"></v-sku>
+		<!-- / sku end -->
 	</section>
 </template>
 
 <script>
 import vHeader from '@/components/header'
 import vBuyCart from '@/components/buyCart'
+import maskBox from '@/components/maskBox'
+import vSku from '@/components/sku'
 
 export default {
 	data() {
@@ -52,6 +62,8 @@ export default {
 				leftShow: true,				// 返回按钮
 				rightText: ""				// 右上角文字
 			},
+			buyCartListShow: false,			// 购物车显示
+			skuSelectedShow: true,			// sku选择显示
 			title: '顶辣妹麻辣萝卜干酱菜农家自制特产萝卜丁咸菜下饭菜750g瓶装包邮',
 			foodImg: '//img.alicdn.com/imgextra/i1/2259601148/TB1laoRXogQMeJjy0FfXXbddXXa_!!0-item_pic.jpg_640x640Q50s50.jpg',
 			num: 666,
@@ -63,12 +75,21 @@ export default {
 	},
 	
 	methods: {
+		tapMask() {
+			
+		},
 		
+		// 关闭sku选择
+		skuClose() {
+			this.skuSelectedShow = false;
+		}
 	},
 	
 	components: {
 		vHeader,
-		vBuyCart
+//		vBuyCart,
+		maskBox,
+		vSku
 	},
 	
 	filters: {
@@ -196,6 +217,18 @@ export default {
 				background-color: $colorYellow;
 			}
 		}
+	}
+	.sku-box {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		z-index: 112;
+		width: px2rem(600px);
+		transform: translate(-50%, -50%);
+		/*display: none;*/
+	}
+	.sku-show {
+		/*display: block;*/
 	}
 }
 </style>

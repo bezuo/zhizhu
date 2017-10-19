@@ -245,11 +245,12 @@ export default {
 	.footer {
 		position: fixed;
 		bottom: 0;
-		left: 0;
+		left: 50%;
 		display: flex;
-		width: 100%;
+		width: px2rem(750px);
 		height: px2rem(98px);
 		background-color: #fff;
+		transform: translateX(-50%);
 		.left-box {
 			width: px2rem(450px);
 			padding-left: px2rem(30px);

@@ -39,14 +39,14 @@ export default {
 .header {
 	position: fixed;
 	top: 0;
-	left: 0;
+	left: 50%;
 	z-index: 99;
-	width: 100%;
+	width: px2rem(750px);
 	height: px2rem(88px);
-	margin: 0 auto;
 	border-bottom: 1px solid #d8d8d8;
 	background-color: #fff;
-	box-sizing: border-box;	
+	transform: translateX(-50%);
+	box-sizing: border-box;
 	.left-box {
 		float: left;
 		width: px2rem(187px);

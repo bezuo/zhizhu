@@ -165,13 +165,14 @@ export default {
 		.nav {
 			position: fixed;
 			top: px2rem(88px);
-			left: 0;
+			left: 50%;
 			z-index: 98;
-			width: 100%;
+			width: px2rem(750px);
 			height: px2rem(80px);
 			border-bottom: 1px solid #eee;
 			background-color: #fff;
 			box-sizing: border-box;
+			transform: translateX(-50%);
 			/*overflow: hidden;*/
 			.nav-bar {
 				display: flex;
@@ -201,6 +202,7 @@ export default {
 						display: block;
 						&.cur {
 							position: relative;
+							color: $color333;
 							z-index: 99;
 							&:before {
 								content: "";

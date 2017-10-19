@@ -17,11 +17,11 @@ export default {
 
 @font-face {
   font-family: 'iconfont';  /* project id 440419 */
-  src: url('//at.alicdn.com/t/font_440419_qfm6zt5fdz7d5cdi.eot');
-  src: url('//at.alicdn.com/t/font_440419_qfm6zt5fdz7d5cdi.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_440419_qfm6zt5fdz7d5cdi.woff') format('woff'),
-  url('//at.alicdn.com/t/font_440419_qfm6zt5fdz7d5cdi.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_440419_qfm6zt5fdz7d5cdi.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_440419_983p2tzbkh3680k9.eot');
+  src: url('//at.alicdn.com/t/font_440419_983p2tzbkh3680k9.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_440419_983p2tzbkh3680k9.woff') format('woff'),
+  url('//at.alicdn.com/t/font_440419_983p2tzbkh3680k9.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_440419_983p2tzbkh3680k9.svg#iconfont') format('svg');
 }
 
 .iconfont {
