@@ -13,3 +13,7 @@
 ## food
 
 点餐h5网站前端代码，项目构建vue + webpack + vue-router;
+
+## shopping
+
+特产h5网站前端代码，项目构建vue + webpack + vue-router;
