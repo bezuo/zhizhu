@@ -46,7 +46,7 @@ export default {
 			this.$refs[ruleForm].validate((valid) => {
 	          	if (valid) {
             		let loginParams = { username: this.ruleForm.account, password: this.ruleForm.checkPass };
-	          	  	sessionStorage.setItem('user', JSON.stringify(loginParams));
+	          	  	localStorage.setItem('user', JSON.stringify(loginParams));
   	  				this.$router.push('/orderList');
 	          	} else {
 	            	console.log('error submit!!');

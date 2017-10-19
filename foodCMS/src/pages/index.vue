@@ -2,7 +2,7 @@
 	<el-row class="container">
 		<!-- header start -->
 		<el-col :span="24" class="header" :class="{'fn-hide': hide}">
-			<el-col :span="10" class="logo" :class="[collapsed?'logo-collapse-width':'logo-width']">
+			<el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
 				{{collapsed?'':sysName}}
 			</el-col>
 			<el-col :span="10">
@@ -128,11 +128,16 @@ export default {
 		}
 	},
 	created() {
-		let str = this.$route.query.topLeft;
-		if(str == 'hide') {
+		let topleftParm = this.$route.query.topLeft;
+		if(topleftParm == 'hide') {
+			this.hide = true;
+		}
+		let tokenParm = this.$route.query.token;
+		if(tokenParm != null && tokenParm.length > 0) {
 			this.hide = true;
 		}
 	},
+
 	methods: {
 		onSubmit() {
 			console.log('submit!');
@@ -151,7 +156,7 @@ export default {
 			this.$confirm('确认退出吗?', '提示', {
 				//type: 'warning'
 			}).then(() => {
-				sessionStorage.removeItem('user');
+				localStorage.removeItem('user');
 				_this.$router.push('/login');
 			}).catch(() => {
 
@@ -166,7 +171,7 @@ export default {
 		}
 	},
 	mounted() {
-		var user = sessionStorage.getItem('user');
+		var user = localStorage.getItem('user');
 		if (user) {
 			user = JSON.parse(user);
 			this.sysUserName = user.name || '';
@@ -179,10 +184,6 @@ export default {
 
 <style scoped lang="scss">
 	/*@import '~scss_vars';*/
-
-.top0px {
-	top: 0px	 !important;
-}
 	
 .iconfont {
 	width: 24px;
@@ -253,6 +254,9 @@ export default {
 		bottom: 0px;
 		overflow: hidden;
 		background-color: #fafafa;
+		&.top0px {
+			top: 0px;
+		}
 		aside {
 			flex:0 0 230px;
 			width: 230px;

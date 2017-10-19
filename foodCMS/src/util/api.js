@@ -9,7 +9,7 @@ axios.defaults.timeout = 5000;
 axios.defaults.headers.post['Content-Type'] = "application/json;charset=UTF-8"
 axios.defaults.headers.put['Content-Type'] = "application/json;charset=UTF-8"
 axios.defaults.withCredentials = true					// 可写入设置的cookies
-axios.defaults.baseURL = '/api/' + version;				// 测试环境
+axios.defaults.baseURL = '/food-cms-api/sys/' + version;				// 测试环境
 
 //POST传参序列化
 axios.interceptors.request.use((config) => {

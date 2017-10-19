@@ -28,13 +28,34 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-    		'/api': {
-        target: 'http://118.89.114.153:8080/sys/',
-        changeOrigin: true,
-        pathRewrite: {
-      			'^/api': ''
-    			}
-   		}
+        '/shop-api/': {
+            target: 'http://118.89.114.153:9080/',
+            changeOrigin: true,
+            pathRewrite: {
+                '^/shop-api/': '/shop-api/'
+            }
+   			},
+        '/shop-cms-api/': {
+            target: 'http://118.89.114.153:9090/',
+            changeOrigin: true,
+            pathRewrite: {
+                '^/shop-cms-api/': '/shop-cms-api/'
+            }
+        },
+        '/food-api/': {
+            target: 'http://118.89.114.153:8080/',
+            changeOrigin: true,
+            pathRewrite: {
+                '^/food-api/': '/food-api/'
+            }
+        },
+        '/food-cms-api/': {
+            target: 'http://118.89.114.153:8090/',
+            changeOrigin: true,
+            pathRewrite: {
+                '^/food-cms-api/': '/food-cms-api/'
+            }
+        }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
